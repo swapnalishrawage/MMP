@@ -283,14 +283,7 @@ class RegistrationVC: UIViewController , UIPickerViewDelegate,UIPickerViewDataSo
             credentialerror.addAction(cancelAction)
             self.present(credentialerror, animated: true, completion: {  })
         }
-        else if(gender.text?.isEmpty)!{
-            let credentialerror = UIAlertController(title: "Regisration", message: "Please enter gender", preferredStyle: .alert)
-            
-            let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler:nil)
-            
-            credentialerror.addAction(cancelAction)
-            self.present(credentialerror, animated: true, completion: {  })
-        }
+        
         else if(mobileno.text?.isEmpty)!{
             let credentialerror = UIAlertController(title: "Regisration", message: "Please enter Mobile Number", preferredStyle: .alert)
             
@@ -301,6 +294,14 @@ class RegistrationVC: UIViewController , UIPickerViewDelegate,UIPickerViewDataSo
         }
         else if(validateMobileNo(value: mobileno.text!) == false){
             let credentialerror = UIAlertController(title: "Regisration", message: "Please enter valid Mobile Number", preferredStyle: .alert)
+            
+            let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler:nil)
+            
+            credentialerror.addAction(cancelAction)
+            self.present(credentialerror, animated: true, completion: {  })
+        }
+        else if(gender.text?.isEmpty)!{
+            let credentialerror = UIAlertController(title: "Regisration", message: "Please enter gender", preferredStyle: .alert)
             
             let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler:nil)
             
@@ -487,9 +488,16 @@ class RegistrationVC: UIViewController , UIPickerViewDelegate,UIPickerViewDataSo
     }
     
     func validateMobileNo(value: String) -> Bool {
-    let PHONE_REGEX = "^\\d{3}-\\d{3}-\\d{4}$"
-    let phoneTest = NSPredicate(format: "SELF MATCHES %@", PHONE_REGEX)
-    let result =  phoneTest.evaluate(with: value)
+    var result = true
+        if(value.characters.count == 10){
+          let PHONE_REGEX = "^[0-9]+$"
+          let phoneTest = NSPredicate(format: "SELF MATCHES %@", PHONE_REGEX)
+          result =  phoneTest.evaluate(with: value)
+        }
+        else{
+            result = false
+        }
+        
     return result
     }
 

@@ -414,12 +414,23 @@ class TrackDialogueVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
 
     
     @IBAction func proceedClick(_ sender: Any) {
+        
+        if(friendId == "" && interest == ""){
+            let msgSend = UIAlertController(title: "Near Me", message: "Please select friend or interest to proceed", preferredStyle: .alert )
+            
+            let cancleAction = UIAlertAction(title: "Ok", style: .cancel, handler:nil)
+            msgSend.addAction(cancleAction)
+            self.present(msgSend, animated: true, completion: {  })
+        }
+        else{
         let pref = UserDefaults.standard
         pref.set(friendId, forKey: "FriendSID")
         pref.set(interest, forKey: "Interest")
         pref.synchronize()
         
         self.performSegue(withIdentifier: "nearmefriend", sender: self)
+            
+        }
         
         
     }

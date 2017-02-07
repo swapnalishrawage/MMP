@@ -500,8 +500,9 @@ class NearMeFriendVC: UIViewController, CLLocationManagerDelegate, GMSMapViewDel
     
     func getNearByFriends(completed: DownloadComplete,interest:String){
         
-        self.view.isUserInteractionEnabled = false
-        self.showActivityIndicator()
+         self.view.isUserInteractionEnabled = false
+         self.hideActivityIndicator()
+         self.showActivityIndicator()
         URLCache.shared.removeAllCachedResponses()
         let methodName = "GetNearByfriend"
         Current_Url = "\(TRACK_URL)\(methodName)"
@@ -535,6 +536,7 @@ class NearMeFriendVC: UIViewController, CLLocationManagerDelegate, GMSMapViewDel
                 
                let mapRes = Mapper<NearByFriendResponseModel>().mapArray(JSONObject: apiResult.value)
                 print("\(apiResult.value)")
+                
                 
                 self.mapview.clear()
                 
@@ -572,6 +574,7 @@ class NearMeFriendVC: UIViewController, CLLocationManagerDelegate, GMSMapViewDel
                 self.setupMylocationMarker(coordinate: self.myLoc.coordinate)
                 self.view.isUserInteractionEnabled = true
                 self.hideActivityIndicator()
+                
             }
             else{
                 self.view.isUserInteractionEnabled = true
@@ -592,7 +595,8 @@ class NearMeFriendVC: UIViewController, CLLocationManagerDelegate, GMSMapViewDel
     func trackfriend(completed: DownloadComplete,friendID:String){
         
         self.view.isUserInteractionEnabled = false
-        //self.showActivityIndicator()
+        self.hideActivityIndicator()
+        self.showActivityIndicator()
         
         let methodName = "TrackFriend"
         Current_Url = "\(TRACK_URL)\(methodName)"

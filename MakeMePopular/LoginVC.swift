@@ -210,8 +210,22 @@ class LoginVC: UIViewController, UINavigationControllerDelegate, CLLocationManag
             let result = response.result
             if let dict = result.value as? [String: AnyObject]
             {
-                
                 let res = Mapper<UserDetail>().map(JSONObject: dict)
+                
+                if(res?.userId == "00000000-0000-0000-0000-000000000000"){
+                  
+                    self.view.isUserInteractionEnabled = true
+                    self.hideActivityIndicator()
+                    let credentialerror = UIAlertController(title: "Login", message: "Login Failed, please try after some time", preferredStyle: .alert)
+                    
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler:nil)
+                    
+                    credentialerror.addAction(cancelAction)
+                    self.present(credentialerror, animated: true, completion: {  })
+                    
+                }
+                else{
+                
                 let pref = UserDefaults.standard
                 pref.set(res?.fName, forKey: "UserFName")
                 pref.set(res?.lName, forKey: "UserLName")
@@ -251,7 +265,7 @@ class LoginVC: UIViewController, UINavigationControllerDelegate, CLLocationManag
                 
                 self.hideActivityIndicator()
                 self.performSegue(withIdentifier: "logintodashboard", sender: self)
-                
+                }
             }
         }
       else{
