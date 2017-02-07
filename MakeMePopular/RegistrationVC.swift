@@ -275,6 +275,14 @@ class RegistrationVC: UIViewController , UIPickerViewDelegate,UIPickerViewDataSo
             credentialerror.addAction(cancelAction)
             self.present(credentialerror, animated: true, completion: {  })
         }
+        else if(isValidEmail(testStr: emailid.text!) == false){
+            let credentialerror = UIAlertController(title: "Regisration", message: "Please enter valid Email Id", preferredStyle: .alert)
+            
+            let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler:nil)
+            
+            credentialerror.addAction(cancelAction)
+            self.present(credentialerror, animated: true, completion: {  })
+        }
         else if(gender.text?.isEmpty)!{
             let credentialerror = UIAlertController(title: "Regisration", message: "Please enter gender", preferredStyle: .alert)
             
@@ -285,6 +293,14 @@ class RegistrationVC: UIViewController , UIPickerViewDelegate,UIPickerViewDataSo
         }
         else if(mobileno.text?.isEmpty)!{
             let credentialerror = UIAlertController(title: "Regisration", message: "Please enter Mobile Number", preferredStyle: .alert)
+            
+            let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler:nil)
+            
+            credentialerror.addAction(cancelAction)
+            self.present(credentialerror, animated: true, completion: {  })
+        }
+        else if(validateMobileNo(value: mobileno.text!) == false){
+            let credentialerror = UIAlertController(title: "Regisration", message: "Please enter valid Mobile Number", preferredStyle: .alert)
             
             let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler:nil)
             
@@ -460,6 +476,21 @@ class RegistrationVC: UIViewController , UIPickerViewDelegate,UIPickerViewDataSo
             self.spinner.stopAnimating()
             self.loadingView.removeFromSuperview()
         }
+    }
+    
+    func isValidEmail(testStr:String) -> Bool {
+        print("validate emilId: \(testStr)")
+        let emailRegEx = "^(?:(?:(?:(?: )*(?:(?:(?:\\t| )*\\r\\n)?(?:\\t| )+))+(?: )*)|(?: )+)?(?:(?:(?:[-A-Za-z0-9!#$%&’*+/=?^_'{|}~]+(?:\\.[-A-Za-z0-9!#$%&’*+/=?^_'{|}~]+)*)|(?:\"(?:(?:(?:(?: )*(?:(?:[!#-Z^-~]|\\[|\\])|(?:\\\\(?:\\t|[ -~]))))+(?: )*)|(?: )+)\"))(?:@)(?:(?:(?:[A-Za-z0-9](?:[-A-Za-z0-9]{0,61}[A-Za-z0-9])?)(?:\\.[A-Za-z0-9](?:[-A-Za-z0-9]{0,61}[A-Za-z0-9])?)*)|(?:\\[(?:(?:(?:(?:(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))\\.){3}(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))))|(?:(?:(?: )*[!-Z^-~])*(?: )*)|(?:[Vv][0-9A-Fa-f]+\\.[-A-Za-z0-9._~!$&'()*+,;=:]+))\\])))(?:(?:(?:(?: )*(?:(?:(?:\\t| )*\\r\\n)?(?:\\t| )+))+(?: )*)|(?: )+)?$"
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        let result = emailTest.evaluate(with: testStr)
+        return result
+    }
+    
+    func validateMobileNo(value: String) -> Bool {
+    let PHONE_REGEX = "^\\d{3}-\\d{3}-\\d{4}$"
+    let phoneTest = NSPredicate(format: "SELF MATCHES %@", PHONE_REGEX)
+    let result =  phoneTest.evaluate(with: value)
+    return result
     }
 
 }
