@@ -13,6 +13,10 @@ class AddFriendVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
     
     @IBOutlet weak var radio1: UIImageView!
     
+    @IBOutlet weak var legendview: UIView!
+    @IBOutlet weak var legendAccepted: UIImageView!
+    @IBOutlet weak var legendPending: UIImageView!
+    @IBOutlet weak var legendAdd: UIImageView!
     @IBOutlet weak var addressField: UITextField!
     @IBOutlet weak var search: UIImageView!
     @IBOutlet weak var nameField: UITextField!
@@ -66,6 +70,21 @@ class AddFriendVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         self.addFriendTable.dataSource = self
         addFriendTable.isHidden = true
         
+        let utils = Utils()
+        
+        legendview.layer.cornerRadius = 4
+        legendview.clipsToBounds = true
+        legendview.layer.borderColor = utils.hexStringToUIColor(hex: "ffffff").cgColor
+        legendview.layer.borderWidth = 2
+        
+        
+            legendPending.image = UIImage.fontAwesomeIcon(name: .hourglass1, textColor: utils.hexStringToUIColor(hex: "7D898B"), size: CGSize(width: 35, height: 35))
+        
+       
+            legendAccepted.image = UIImage.fontAwesomeIcon(name: .checkSquareO, textColor: utils.hexStringToUIColor(hex: "5CDD67"), size: CGSize(width: 35, height: 35))
+        
+       
+            legendAdd.image = UIImage.fontAwesomeIcon(name: .userPlus, textColor: utils.hexStringToUIColor(hex: "ffffff"), size: CGSize(width: 35, height: 35))
         
         
     }

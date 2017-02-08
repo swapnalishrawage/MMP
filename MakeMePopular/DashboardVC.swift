@@ -289,11 +289,14 @@ class DashboardVC:UIViewController, UICollectionViewDelegate,UICollectionViewDat
     
     func setChart(){
         
-        let today = Double(UserDefaults.standard.value(forKey: "TodayTrack") as! String)
-        let lastWeek = Double(UserDefaults.standard.value(forKey: "LastWeek") as! String)
-        let lastMonth = Double(UserDefaults.standard.value(forKey: "LastMonth") as! String)
+        let today:Double = Double(UserDefaults.standard.value(forKey: "TodayTrack") as! String)!
+        let lastWeek:Double = Double(UserDefaults.standard.value(forKey: "LastWeek") as! String)!
+        let lastMonth:Double = Double(UserDefaults.standard.value(forKey: "LastMonth") as! String)!
         
-      
+        var counter:Double = 50
+        if(today >= 50.0 || lastWeek >= 50.0 || lastMonth >= 50.0){
+            counter = 100
+        }
         
         
         let utils = Utils()
@@ -303,7 +306,7 @@ class DashboardVC:UIViewController, UICollectionViewDelegate,UICollectionViewDat
         self.chartview.drawValueAboveBarEnabled = true
         
         
-        self.chartview.maxVisibleCount = 50
+        self.chartview.maxVisibleCount = Int(counter)
         
         
         
@@ -320,7 +323,7 @@ class DashboardVC:UIViewController, UICollectionViewDelegate,UICollectionViewDat
         leftAxis.drawAxisLineEnabled = true;
         leftAxis.drawGridLinesEnabled = true;
         leftAxis.axisMinimum = 0.0; // this replaces startAtZero = YES
-        leftAxis.axisMaximum = 50
+        leftAxis.axisMaximum = counter
         leftAxis.enabled = true
         
         let rightAxis = self.chartview.rightAxis
@@ -329,7 +332,7 @@ class DashboardVC:UIViewController, UICollectionViewDelegate,UICollectionViewDat
         rightAxis.drawAxisLineEnabled = true;
         rightAxis.drawGridLinesEnabled = false;
         rightAxis.axisMinimum = 0.0; // this replaces startAtZero = YES
-        rightAxis.axisMaximum = 50
+        rightAxis.axisMaximum = counter
         
         let l = self.chartview.legend
         l.enabled =  true
@@ -349,7 +352,7 @@ class DashboardVC:UIViewController, UICollectionViewDelegate,UICollectionViewDat
         for i in 0..<count{
             
             //yVals.append(BarChartDataEntry(x: , y: ), data: days)
-            yVals.append(BarChartDataEntry(x: Double(i) * spaceForBar, y: Double(val[i]!), data: days as AnyObject?))
+            yVals.append(BarChartDataEntry(x: Double(i) * spaceForBar, y: Double(val[i]), data: days as AnyObject?))
             let _ = formato.stringForValue(Double(i), axis: xAxis)
         }
         xAxis.valueFormatter = formato

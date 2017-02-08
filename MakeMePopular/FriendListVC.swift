@@ -22,6 +22,12 @@ class FriendListVC: UIViewController , UITableViewDataSource, UITableViewDelegat
     var sentList = [FriendListModel]()
     var recievedList = [FriendListModel]()
     
+    
+    @IBOutlet weak var blocked: UIImageView!
+    @IBOutlet weak var rejected: UIImageView!
+    @IBOutlet weak var infoView: UIView!
+    @IBOutlet weak var infoPending: UIImageView!
+    @IBOutlet weak var legendInfoView: UIView!
     @IBOutlet weak var friendListTable: UITableView!
     
     @IBOutlet weak var filetrrequest: UISegmentedControl!
@@ -81,6 +87,25 @@ class FriendListVC: UIViewController , UITableViewDataSource, UITableViewDelegat
             self.present(credentialerror, animated: true, completion: {  })
             
         }
+        
+        
+        let utils = Utils()
+        
+        infoView.layer.cornerRadius = 4
+        infoView.clipsToBounds = true
+        infoView.layer.borderColor = utils.hexStringToUIColor(hex: "ffffff").cgColor
+        infoView.layer.borderWidth = 2
+        
+        
+        rejected.image = UIImage.fontAwesomeIcon(name: .userTimes, textColor: utils.hexStringToUIColor(hex: "DD2518"), size: CGSize(width: 35, height: 35))
+        
+        
+        infoPending.image = UIImage.fontAwesomeIcon(name: .hourglass1, textColor: utils.hexStringToUIColor(hex: "7D898B"), size: CGSize(width: 35, height: 35))
+        
+        
+        blocked.image = UIImage.fontAwesomeIcon(name: .timesCircleO, textColor: utils.hexStringToUIColor(hex: "DD2518"), size: CGSize(width: 35, height: 35))
+        
+
 
         
     }
