@@ -13,6 +13,7 @@ import ObjectMapper
 
 class NearMeFriendVC: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    @IBOutlet weak var distanceSlider: CustomSlider!
     @IBOutlet weak var filter: UIImageView!
     @IBOutlet weak var back: UIImageView!
     @IBOutlet weak var mapview: GMSMapView!
@@ -33,6 +34,7 @@ class NearMeFriendVC: UIViewController, CLLocationManagerDelegate, GMSMapViewDel
     var destinationMarker: GMSMarker!
     var myLoc:CLLocation!
     var friendID:String = ""
+    var distance:Int = 25
     
     var isradio1Chk:Bool!
     var favOption = [InterestListModel]()
@@ -134,7 +136,7 @@ class NearMeFriendVC: UIViewController, CLLocationManagerDelegate, GMSMapViewDel
            // var timer = Timer.scheduledTimer(timeInterval:2000, target: self, selector: #selector(self.update), userInfo: nil, repeats: true);
         }
         
-       
+       distanceSlider.value = 25
         
     }
     
@@ -181,6 +183,9 @@ class NearMeFriendVC: UIViewController, CLLocationManagerDelegate, GMSMapViewDel
         let utils = Utils()
         
         if(isr1Check == true){
+            distanceSlider.isHidden = false
+            distanceSlider.label.isHidden = false
+            
             radio1.image = UIImage.fontAwesomeIcon(name: .checkCircleO, textColor: utils.hexStringToUIColor(hex: "0097A7"), size: CGSize(width: 30, height: 30))
             radio2.image = UIImage.fontAwesomeIcon(name: .circleO, textColor: utils.hexStringToUIColor(hex: "0097A7"), size: CGSize(width: 30, height: 30))
             if(Reachability.isConnectedToNetwork()){
@@ -212,6 +217,10 @@ class NearMeFriendVC: UIViewController, CLLocationManagerDelegate, GMSMapViewDel
 
             
         }else{
+            
+            distanceSlider.isHidden = true
+            distanceSlider.label.isHidden = true
+            
             radio2.image = UIImage.fontAwesomeIcon(name: .checkCircleO, textColor: utils.hexStringToUIColor(hex: "0097A7"), size: CGSize(width: 30, height: 30))
             radio1.image = UIImage.fontAwesomeIcon(name: .circleO, textColor: utils.hexStringToUIColor(hex: "0097A7"), size: CGSize(width: 30, height: 30))
             if(Reachability.isConnectedToNetwork()){
@@ -513,9 +522,10 @@ class NearMeFriendVC: UIViewController, CLLocationManagerDelegate, GMSMapViewDel
         let userId = UserDefaults.standard.value(forKey: "UserID") as! String
         let latitude:Double = myLoc.coordinate.latitude as Double
         let longitude:Double = myLoc.coordinate.longitude as Double
+        distance = UserDefaults.standard.integer(forKey: "Distance") * 1000
         
         let ipbody = ["userId":userId, "latitude":latitude, "longitude":
-            longitude, "intrest":interest, "distanceBetween":10000] as [String : Any]
+            longitude, "intrest":interest, "distanceBetween":distance] as [String : Any]
         
        
         
@@ -1028,6 +1038,13 @@ class NearMeFriendVC: UIViewController, CLLocationManagerDelegate, GMSMapViewDel
         
     }
 
+    @IBAction func distanceSlideTap(_ sender: CustomSlider) {
+        
+        distance = Int(sender.label.text!)!
+        UserDefaults.standard.set(distance, forKey: "Distance")
+        UserDefaults.standard.synchronize()
+        
+    }
     
 }
 

@@ -12,6 +12,7 @@ import ObjectMapper
 
 class TrackDialogueVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    @IBOutlet weak var distanceSlider: CustomSlider!
     @IBOutlet weak var optionFriend: UIImageView!
     @IBOutlet weak var close: UIImageView!
     @IBOutlet weak var proceed: UIButton!
@@ -24,6 +25,7 @@ class TrackDialogueVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     var friendId:String = ""
     var favOption = [InterestListModel]()
     var friendList = [FriendListModel]()
+    var distance = 25
     
     var spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
     var loadingView: UIView = UIView()
@@ -36,6 +38,8 @@ class TrackDialogueVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
         pickerView.delegate = self
         pickerView.dataSource = self
+        
+        distanceSlider.value = 25
         
         
     }
@@ -97,7 +101,8 @@ class TrackDialogueVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
         if(isr1Check == true){
             let utils = Utils()
-            
+            distanceSlider.isHidden = true
+            distanceSlider.label.isHidden = true
             self.optionFriend.backgroundColor = utils.hexStringToUIColor(hex: "00BCD4")
             self.optionFriend.layer.cornerRadius = 10
             self.optionFriend.clipsToBounds = true
@@ -107,6 +112,9 @@ class TrackDialogueVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             self.optionPossibilities.layer.cornerRadius = 10
             self.optionPossibilities.clipsToBounds = true
             self.optionPossibilities.image = UIImage.fontAwesomeIcon(name: .userPlus, textColor: utils.hexStringToUIColor(hex: "00BCD4"), size: CGSize(width: 60, height: 60))
+            
+            
+            
             if(friendList.count == 0)
             {
                 if(Reachability.isConnectedToNetwork()){
@@ -134,7 +142,8 @@ class TrackDialogueVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
            
             
         }else{
-            
+            distanceSlider.isHidden = false
+            distanceSlider.label.isHidden = false
             self.optionFriend.backgroundColor = utils.hexStringToUIColor(hex: "ffffff")
             self.optionFriend.layer.cornerRadius = 10
             self.optionFriend.clipsToBounds = true
@@ -557,6 +566,13 @@ class TrackDialogueVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     }
     
 
+    @IBAction func distanceSlideTap(_ sender: CustomSlider) {
+        
+       distance = Int(sender.label.text!)!
+        
+        UserDefaults.standard.set(distance, forKey: "Distance")
+        UserDefaults.standard.synchronize()
+    }
 
 }
 

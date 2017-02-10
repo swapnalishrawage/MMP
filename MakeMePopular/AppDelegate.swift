@@ -35,9 +35,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FIRApp.configure()
         
+        NSSetUncaughtExceptionHandler { exception in
+            print(exception)
+            print(exception.callStackSymbols)
+            let utils = Utils()
+            utils.sendMail(text: exception.callStackSymbols.joined(separator: "\n"))
+        }
+        
+    
+        
         return true
     }
     
+  
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
         //let title:String = ""
@@ -459,7 +469,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         }
     }
-
+    
+   
    
 }
 

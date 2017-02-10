@@ -33,13 +33,12 @@ class ProfileInfo: UIViewController ,UIImagePickerControllerDelegate, UINavigati
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        setUPView()
-        
-         imagePicker.delegate = self
+    
+        imagePicker.delegate = self
         
     }
     
-    func setUPView(){
+    func setUPView()  {
         
         let dob:String = UserDefaults.standard.value(forKey: "BirthDate") as! String
         let emailid:String = UserDefaults.standard.value(forKey: "EmailID") as! String
@@ -100,7 +99,6 @@ class ProfileInfo: UIViewController ,UIImagePickerControllerDelegate, UINavigati
         singleTap.numberOfTapsRequired = 1 // you can change this value
         back.isUserInteractionEnabled = true
         back.addGestureRecognizer(singleTap)
-
         
        
     }
@@ -355,6 +353,10 @@ class ProfileInfo: UIViewController ,UIImagePickerControllerDelegate, UINavigati
         localDate = dateFormatter.string(from: date!)
         return localDate
     }
+    
+    
+    
+    
     
 }
 

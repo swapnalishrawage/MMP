@@ -320,4 +320,42 @@ func hexStringToUIColor (hex:String) -> UIColor {
         alpha: CGFloat(1.0)
     )
    }
+    
+    
+    func sendMail(text:String){
+        let smtpSession = MCOSMTPSession()
+        smtpSession.hostname = "smtp.gmail.com"
+        smtpSession.username = "sachinshinderzt@gmail.com"
+        smtpSession.password = "realizer"
+        smtpSession.port = 465
+        smtpSession.authType = MCOAuthType.saslPlain
+        smtpSession.connectionType = MCOConnectionType.TLS
+        smtpSession.connectionLogger = {(connectionID, type, data) in
+            if data != nil {
+                if let string = NSString(data: data!, encoding: String.Encoding.utf8.rawValue){
+                    NSLog("Connectionlogger: \(string)")
+                }
+            }
+        }
+        
+        let builder = MCOMessageBuilder()
+        builder.header.to = [MCOAddress(displayName: "Sachin Shinde", mailbox: "sachinshinderzt1@gmail.com ")]
+        builder.header.from = MCOAddress(displayName: "Sachin Shinde", mailbox: "sachinshinderzt@gmail.com")
+        builder.header.subject = "IOS: Find Me Friend"
+        builder.htmlBody = text
+        
+        let rfc822Data = builder.data()
+        let sendOperation = smtpSession.sendOperation(with: rfc822Data)
+        sendOperation?.start { (error) -> Void in
+            if (error != nil) {
+                NSLog("Error sending email: \(error)")
+            } else {
+                NSLog("Successfully sent email!")
+            }
+        }
+    }
+    
+    
 }
+
+

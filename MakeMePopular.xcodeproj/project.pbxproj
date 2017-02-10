@@ -60,6 +60,7 @@
 		04D02D941E38C9F900CB19A0 /* FreindRequestNotificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D02D931E38C9F900CB19A0 /* FreindRequestNotificationVC.swift */; };
 		04D06C881E309A1500CAB7E2 /* InterestListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D06C871E309A1500CAB7E2 /* InterestListModel.swift */; };
 		04D263FF1E2DEA7C00FE99F4 /* SearchFriendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D263FE1E2DEA7C00FE99F4 /* SearchFriendModel.swift */; };
+		04D316FA1E4B374E006417C0 /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D316F91E4B374E006417C0 /* CustomSlider.swift */; };
 		04DB85471E35C0E700D1B0DF /* NearByFriendResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DB85461E35C0E700D1B0DF /* NearByFriendResponseModel.swift */; };
 		04DB85491E35C85000D1B0DF /* TrackFriendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DB85481E35C85000D1B0DF /* TrackFriendModel.swift */; };
 		F611F8741097258EC603ACBD /* Pods_MakeMePopular.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EFE3F955E9262F4DA21512C /* Pods_MakeMePopular.framework */; };
@@ -122,6 +123,8 @@
 		04D02D931E38C9F900CB19A0 /* FreindRequestNotificationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FreindRequestNotificationVC.swift; sourceTree = "<group>"; };
 		04D06C871E309A1500CAB7E2 /* InterestListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterestListModel.swift; sourceTree = "<group>"; };
 		04D263FE1E2DEA7C00FE99F4 /* SearchFriendModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFriendModel.swift; sourceTree = "<group>"; };
+		04D316F81E4B01EE006417C0 /* MakeMePopular-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MakeMePopular-Bridging-Header.h"; sourceTree = "<group>"; };
+		04D316F91E4B374E006417C0 /* CustomSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
 		04DB85461E35C0E700D1B0DF /* NearByFriendResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearByFriendResponseModel.swift; sourceTree = "<group>"; };
 		04DB85481E35C85000D1B0DF /* TrackFriendModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackFriendModel.swift; sourceTree = "<group>"; };
 		1EFE3F955E9262F4DA21512C /* Pods_MakeMePopular.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MakeMePopular.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -239,6 +242,7 @@
 				037156D71E26626400472E80 /* View */,
 				037156D61E26625600472E80 /* Model */,
 				0372D7131E24D15400B165B4 /* AppDelegate.swift */,
+				04D316F91E4B374E006417C0 /* CustomSlider.swift */,
 				037156E01E266E0F00472E80 /* Constants.swift */,
 				03901EBF1E24E52D00D516C9 /* Utils.swift */,
 				04788D5F1E4081CD003A0FC9 /* ImageToText.swift */,
@@ -251,6 +255,7 @@
 				0372D71F1E24D15400B165B4 /* LaunchScreen.storyboard */,
 				0372D7221E24D15400B165B4 /* Info.plist */,
 				0372D71A1E24D15400B165B4 /* MakeMePopular.xcdatamodeld */,
+				04D316F81E4B01EE006417C0 /* MakeMePopular-Bridging-Header.h */,
 			);
 			path = MakeMePopular;
 			sourceTree = "<group>";
@@ -415,6 +420,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				041ED3B41E2E29C100DE97EF /* Extensions.swift in Sources */,
+				04D316FA1E4B374E006417C0 /* CustomSlider.swift in Sources */,
 				037156D11E26303E00472E80 /* InterestVC.swift in Sources */,
 				04CEE0BF1E41DB42005B64BC /* NearMePlaces.swift in Sources */,
 				041ED3BE1E2E4C8200DE97EF /* FriendlistCell.swift in Sources */,
@@ -594,6 +600,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = www.realizertech.com.MakeMePopular;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MakeMePopular/MakeMePopular-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -610,6 +617,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = www.realizertech.com.MakeMePopular;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MakeMePopular/MakeMePopular-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

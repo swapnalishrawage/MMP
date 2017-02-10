@@ -16,6 +16,7 @@ target 'MakeMePopular' do
     pod 'Firebase/Messaging’
     pod 'GoogleMaps'
     pod 'Charts/Realm'
+    pod 'mailcore2-ios'
 
 
 end

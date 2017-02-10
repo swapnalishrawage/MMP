@@ -345,7 +345,7 @@ class DashboardVC:UIViewController, UICollectionViewDelegate,UICollectionViewDat
        
 
         
-        let val = [today,lastWeek,lastMonth]
+        let val = [lastMonth,lastWeek,today]
         let days = ["Last Month","Last Week","Today"]
         var yVals = [BarChartDataEntry]()
         
@@ -456,6 +456,7 @@ class DashboardVC:UIViewController, UICollectionViewDelegate,UICollectionViewDat
             activityVC.popoverPresentationController?.sourceView = self.view
                 self.present(activityVC, animated: true, completion: nil)
             }
+           
         }
         else if(indexPath.row == 4){
             
