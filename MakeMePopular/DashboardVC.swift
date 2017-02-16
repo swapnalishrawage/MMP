@@ -14,7 +14,7 @@ import Alamofire
 
 class DashboardVC:UIViewController, UICollectionViewDelegate,UICollectionViewDataSource, UINavigationControllerDelegate, CLLocationManagerDelegate, GMSMapViewDelegate{
     
-    var dashboard=["Emergency","Friend Near","Add Friend","Invite Friend","Places Near","Friend List","Notification"]
+    var dashboard=["Emergency","Friend Near","Add Friend","Invite Friend","Places Near","Friend List","Notification","Chat","Album"]
     
     var trackingDay: [String]!
     let locationManager = CLLocationManager()
@@ -30,6 +30,11 @@ class DashboardVC:UIViewController, UICollectionViewDelegate,UICollectionViewDat
     @IBOutlet weak var viewProfile: UILabel!
     @IBOutlet weak var settingMainView: UIView!
     
+    @IBOutlet weak var mainchartViewTop: NSLayoutConstraint!
+    @IBOutlet weak var mainChartViewBottom: NSLayoutConstraint!
+    @IBOutlet weak var chartViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var mainCharViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var mainChartView: UIView!
     @IBOutlet weak var settingView: UIImageView!
     @IBOutlet weak var chartview: HorizontalBarChartView!
     var isSettingsOpen:Bool = false
@@ -51,11 +56,25 @@ class DashboardVC:UIViewController, UICollectionViewDelegate,UICollectionViewDat
         dashboardCV.layer.shadowRadius = 5.0
         dashboardCV.layer.shadowColor = UIColor.black.cgColor
         
-       
+        if(view.bounds.width > 320){
+            if let layout = dashboardCV.collectionViewLayout as? UICollectionViewFlowLayout {
+                print("\(view.bounds.width)")
+                let itemWidth = dashboardCV.bounds.width / 3
+                print("\(itemWidth)")
+                let itemHeight = layout.itemSize.height
+                layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
+                layout.invalidateLayout()
+            }
+            
+            mainCharViewHeight.constant = 215
+            chartViewHeight.constant = 200
+            mainChartViewBottom.constant = 40
+            mainchartViewTop.constant = 30
+            
+        }
+
         
-        
-        
-        self.locationManager.requestAlwaysAuthorization()
+       self.locationManager.requestAlwaysAuthorization()
         
         // For use in foreground
         self.locationManager.requestWhenInUseAuthorization()
@@ -63,7 +82,8 @@ class DashboardVC:UIViewController, UICollectionViewDelegate,UICollectionViewDat
         
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
-            locationManager.distanceFilter = 10
+            locationManager.allowsBackgroundLocationUpdates = true
+            locationManager.distanceFilter = 100
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
         }
@@ -346,6 +366,7 @@ class DashboardVC:UIViewController, UICollectionViewDelegate,UICollectionViewDat
 
         
         let val = [lastMonth,lastWeek,today]
+        
         let days = ["Last Month","Last Week","Today"]
         var yVals = [BarChartDataEntry]()
         
@@ -408,6 +429,12 @@ class DashboardVC:UIViewController, UICollectionViewDelegate,UICollectionViewDat
             }
             else if(indexPath.row == 6){
                 cell.layer.backgroundColor = utils.hexStringToUIColor(hex:"800040").cgColor
+            }
+            else if(indexPath.row == 7){
+                cell.layer.backgroundColor = utils.hexStringToUIColor(hex:"008080").cgColor
+            }
+            else if(indexPath.row == 8){
+                cell.layer.backgroundColor = utils.hexStringToUIColor(hex:"FF8000").cgColor
             }
             
             return cell
@@ -473,6 +500,13 @@ class DashboardVC:UIViewController, UICollectionViewDelegate,UICollectionViewDat
             self.performSegue(withIdentifier: "notiflist", sender: self)
             
         }
+        else if(indexPath.row == 7){
+            
+            self.performSegue(withIdentifier: "chat", sender: self)
+            
+        }
+        
+        
     }
     
     func logOut(completed: DownloadComplete){

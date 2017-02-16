@@ -12,6 +12,7 @@ import ObjectMapper
 
 class TrackDialogueVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    @IBOutlet weak var noData: UITextView!
     @IBOutlet weak var distanceSlider: CustomSlider!
     @IBOutlet weak var optionFriend: UIImageView!
     @IBOutlet weak var close: UIImageView!
@@ -26,6 +27,7 @@ class TrackDialogueVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     var favOption = [InterestListModel]()
     var friendList = [FriendListModel]()
     var distance = 25
+    var listCount = 0
     
     var spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
     var loadingView: UIView = UIView()
@@ -40,6 +42,12 @@ class TrackDialogueVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         pickerView.dataSource = self
         
         distanceSlider.value = 25
+        
+        distance = Int(distanceSlider.value)
+        UserDefaults.standard.set(distance, forKey: "Distance")
+        UserDefaults.standard.synchronize()
+        
+        noData.isHidden = true
         
         
     }
@@ -133,9 +141,15 @@ class TrackDialogueVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
 
             }
             else{
+                
+                self.listCount = self.friendList.count
+                
                 self.pickerView.delegate = self
                 self.pickerView.dataSource = self
                 self.pickerView.reloadAllComponents()
+                
+                interest = ""
+                friendId = friendList[0].friendsUserId!
                 
                 self.pickerView.selectRow(0, inComponent: 0, animated: true)
             }
@@ -171,10 +185,14 @@ class TrackDialogueVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                
             }
             else{
+                self.listCount = self.favOption.count
+                
                 self.pickerView.delegate = self
                 self.pickerView.dataSource = self
                 self.pickerView.reloadAllComponents()
                 self.pickerView.selectRow(0, inComponent: 0, animated: true)
+                friendId = ""
+                interest = favOption[0].interestName!
             }
             
             
@@ -233,8 +251,11 @@ class TrackDialogueVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             {
                 
                 let res = Mapper<InterestListModel>().mapArray(JSONObject: result.value)
-                
+                self.listCount = (res?.count)!
                 if((res?.count)! > 0){
+                    self.pickerView.isHidden = false
+                    self.noData.isHidden = true
+            
                     self.favOption = res!
                     self.pickerView.delegate = self
                     self.pickerView.dataSource = self
@@ -245,6 +266,11 @@ class TrackDialogueVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                         self.interest = self.favOption[0].interestName!
                         self.friendId = ""
                     }
+                }
+                else{
+                    self.pickerView.isHidden = true
+                    self.noData.isHidden = false
+                    self.noData.text = "You have selected no interests. Please select interest first"
                 }
                 
             }
@@ -286,7 +312,7 @@ class TrackDialogueVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 
                 let res = Mapper<FriendListModel>().mapArray(JSONObject: result.value)
                 self.friendList.removeAll()
-                
+               
                 if((res?.count)! > 0){
                     for i in 0...((res?.count)! - 1)
                     {
@@ -295,13 +321,15 @@ class TrackDialogueVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                         self.friendList.append((res?[i])!)
                         }
                     }
+                    self.listCount = self.friendList.count
                     
                     if(self.friendList.count > 0){
                         let frnd = FriendListModel()
                         frnd.setupValue(friendName1: "All")
                         self.friendList.append(frnd)
                     }
-                   
+                    self.pickerView.isHidden = false
+                    self.noData.isHidden = true
                     self.pickerView.delegate = self
                     self.pickerView.dataSource = self
                     self.pickerView.reloadAllComponents()
@@ -319,6 +347,11 @@ class TrackDialogueVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                         
                       }
                     }
+                }
+                else{
+                    self.pickerView.isHidden = true
+                    self.noData.isHidden = false
+                    self.noData.text = "You have added no friends. Please add friends first"
                 }
                 self.view.isUserInteractionEnabled = true
                 self.hideActivityIndicator()
@@ -423,7 +456,7 @@ class TrackDialogueVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
 
     
     @IBAction func proceedClick(_ sender: Any) {
-        
+        if(listCount > 0){
         if(friendId == "" && interest == ""){
             let msgSend = UIAlertController(title: "Near Me", message: "Please select friend or interest to proceed", preferredStyle: .alert )
             
@@ -440,8 +473,15 @@ class TrackDialogueVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         self.performSegue(withIdentifier: "nearmefriend", sender: self)
             
         }
-        
-        
+      }
+        else{
+            let msgSend = UIAlertController(title: "Near Me", message: "No  friend or interest available to proceed", preferredStyle: .alert )
+            
+            let cancleAction = UIAlertAction(title: "Ok", style: .cancel, handler:nil)
+            msgSend.addAction(cancleAction)
+            self.present(msgSend, animated: true, completion: {  })
+        }
+    
     }
     
     func showActivityIndicator() {

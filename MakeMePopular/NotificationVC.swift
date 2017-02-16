@@ -109,9 +109,10 @@ class NotificationVC: UIViewController {
             let pref = UserDefaults.standard
             pref.set(friendId, forKey: "FriendSID")
             pref.set("", forKey: "Interest")
+            pref.set(true, forKey: "Route")
             pref.synchronize()
 
-            acceptrejectEmergencyRequest(completed: {}, isreach: false,isShowMap: true)
+            acceptrejectEmergencyRequest(completed: {}, isreach: true,isShowMap: true)
             
         }
         else {
@@ -204,9 +205,6 @@ class NotificationVC: UIViewController {
             {
                 if(isShowMap == true){
                     self.performSegue(withIdentifier: "showmap", sender: nil)
-                   /* self.dismiss(animated: true, completion:{
-                        self.performSegue(withIdentifier: "showmap", sender: nil)
-                    })*/
                     
                 }
                 else{

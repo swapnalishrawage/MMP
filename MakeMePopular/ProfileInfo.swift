@@ -35,6 +35,7 @@ class ProfileInfo: UIViewController ,UIImagePickerControllerDelegate, UINavigati
         
     
         imagePicker.delegate = self
+        setUPView()
         
     }
     

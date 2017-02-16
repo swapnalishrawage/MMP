@@ -117,7 +117,7 @@ class NotificationDetailVC: UIViewController {
         messageText.text = _notification.notiText
         userName.text = _notification.notiFromUserName
         
-        userPic.layer.cornerRadius = 41
+        userPic.layer.cornerRadius = 31
         userPic.clipsToBounds = true
         
         print("\(_notification.notiTime)")
@@ -165,7 +165,7 @@ class NotificationDetailVC: UIViewController {
     
     @IBAction func btnMapClick(_ sender: Any) {
         if(Reachability.isConnectedToNetwork()){
-        acceptrejectEmergencyRequest(completed: {}, isreach: false,isShoeMAp: true)
+        acceptrejectEmergencyRequest(completed: {}, isreach: true,isShoeMAp: true)
         }
         else{
             let credentialerror = UIAlertController(title: "No Internet Connection", message: "Make sure your device is connected to the internet.", preferredStyle: .alert)
@@ -325,6 +325,7 @@ class NotificationDetailVC: UIViewController {
                     let pref = UserDefaults.standard
                     pref.set(self._notification.notiFromUserId, forKey: "FriendSID")
                     pref.set("", forKey: "Interest")
+                    pref.set(true, forKey: "Route")
                     pref.synchronize()
                     
                     self.performSegue(withIdentifier: "nearme", sender: nil)

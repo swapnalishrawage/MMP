@@ -27,8 +27,17 @@ class InterestCell: UICollectionViewCell {
         
         let utils = Utils()
         
-        
+        if(interest == "Trekking/Outing")
+        {
+            interestName.text = "Hiking"
+        }
+        else if(interest == "Technical/IT")
+        {
+            interestName.text = "Technical"
+        }
+        else{
         interestName.text = interest
+        }
         interestName.textColor = utils.hexStringToUIColor(hex: textColor)
         
         utils.SetInterestIcon(interest: interest, txtColor: textColor, iconView: interestIcon)

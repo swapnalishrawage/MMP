@@ -33,6 +33,17 @@ class InterestVC: UIViewController , UICollectionViewDelegate,UICollectionViewDa
         let utils = Utils()
         utils.createGradientLayer(view: self.view)
         
+        if(view.bounds.width > 320){
+          if let layout = interestView.collectionViewLayout as? UICollectionViewFlowLayout {
+            print("\(view.bounds.width)")
+            let itemWidth = interestView.bounds.width / 3
+            print("\(itemWidth)")
+            let itemHeight = layout.itemSize.height
+            layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
+            layout.invalidateLayout()
+          }
+        }
+        
     }
     
     func setUP(){
@@ -203,6 +214,13 @@ class InterestVC: UIViewController , UICollectionViewDelegate,UICollectionViewDa
         if(isselected == true){
             selected = false
             bgcolor = "00BCD4"
+            for i in 0...(self.selectedInterest.count){
+                if(self.selectedInterest[i] == interests[indexPath.row]._interestName){
+                    self.selectedInterest.remove(at: i)
+                    break
+                }
+            }
+            
         }else{
             selected = true
             self.selectedInterest.append(interests[indexPath.row]._interestName)

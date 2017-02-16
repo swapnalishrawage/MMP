@@ -12,10 +12,13 @@ import FirebaseInstanceID
 import FirebaseMessaging
 import Firebase
 import GoogleMaps
+import Alamofire
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate,CLLocationManagerDelegate, GMSMapViewDelegate {
 
     var window: UIWindow?
+    let locationManager = CLLocationManager()
+    var city:String = ""
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -42,7 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             utils.sendMail(text: exception.callStackSymbols.joined(separator: "\n"))
         }
         
-    
         
         return true
     }
@@ -150,6 +152,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             else if(type == "TrackingStarted"){
                 
+                
+                 self.getCurrentLocation()
+                
                 if let name = userInfo["TrackingByUserName"] as? String {
                     
                     message = name + " started Tracking you"
@@ -204,6 +209,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             //app is in background, if content-available key of your notification is set to 1, poll to your backend to retrieve data and update your interface here
             
             // Print full message.
+            
+           var type:String = ""
+           
+            if let notitype = userInfo["Type"] as? String {
+                
+                type = notitype
+            }
+             if(type == "TrackingStarted"){
+                
+                self.getCurrentLocation()
+            }
+            
             print(userInfo)
             
             
@@ -339,6 +356,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             else if(type == "TrackingStarted"){
                 
+               
+               self.getCurrentLocation()
+                
                 if let name = userInfo["TrackingByUserName"] as? String {
                     
                     message = name + " started Tracking you"
@@ -370,6 +390,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
              NotificationCenter.default.post(name: NSNotification.Name(rawValue: "recievednotif"), object: nil)
             
+        }
+        else{
+            if let notitype = userInfo["Type"] as? String {
+                
+                if(notitype == "TrackingStarted"){
+                    self.getCurrentLocation()
+                }
+            }
         }
         
         
@@ -470,7 +498,80 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-   
+    func getCurrentLocation(){
+        self.locationManager.requestAlwaysAuthorization()
+        self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.allowsBackgroundLocationUpdates = true
+        
+        if CLLocationManager.locationServicesEnabled() {
+            self.locationManager.delegate = self
+            self.locationManager.requestLocation()
+        }
+        
+        self.locationManager.requestLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
+        let location:CLLocation = CLLocation(latitude: locValue.latitude, longitude: locValue.longitude)
+        CLGeocoder().reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
+            
+            // Place details
+            var placeMark: CLPlacemark!
+            placeMark = placemarks?[0]
+            
+            // Address dictionary
+            //print(placeMark.addressDictionary)
+            
+            // City
+            if(placeMark != nil){
+                var adrs = ""
+                if(placeMark.locality != nil){
+                    self.city = placeMark.subAdministrativeArea! as String
+                }
+                
+                if(placeMark.thoroughfare != nil){
+                    adrs = placeMark.thoroughfare! as String
+                    
+                }
+                if(placeMark.subThoroughfare != nil){
+                    adrs = adrs + " " + placeMark.subThoroughfare! as String
+                    
+                }
+                if(placeMark.subLocality != nil){
+                    adrs = adrs + " " + placeMark.subLocality! as String
+                    print(adrs)
+                }
+                print(self.city)
+                
+                let pref = UserDefaults.standard
+                pref.setValue(self.city, forKey: "UserCity")
+                pref.setValue(adrs, forKey: "UserAdrs")
+                pref.set(locValue.latitude, forKey: "latitude")
+                pref.set(locValue.longitude, forKey: "longitude")
+                pref.synchronize()
+                
+                if(Reachability.isConnectedToNetwork())
+                {
+                    let setlocapi = SetLocationAPI()
+                    setlocapi.setCoOrdinates(completed: {}, coordinates: location, City: self.city)
+                }else {
+                    
+                    
+                }
+                
+                
+            }
+            
+            
+        })
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Failed to find user's location: \(error.localizedDescription)")
+    }
+
    
 }
 

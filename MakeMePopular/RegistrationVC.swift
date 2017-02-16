@@ -134,7 +134,7 @@ class RegistrationVC: UIViewController , UIPickerViewDelegate,UIPickerViewDataSo
         
         utils.createGradientLayer(view: self.view)
         
-        profileImage.image = UIImage.fontAwesomeIcon(name: .user, textColor: utils.hexStringToUIColor(hex: "FFFFFF"), size: CGSize(width: 110, height: 110))
+        profileImage.image = UIImage.fontAwesomeIcon(name: .user, textColor: utils.hexStringToUIColor(hex: "FFFFFF"), size: CGSize(width: 65, height: 65))
         
         
         genderPickerView = UIPickerView()
@@ -209,7 +209,7 @@ class RegistrationVC: UIViewController , UIPickerViewDelegate,UIPickerViewDataSo
         
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             self.profileImage.backgroundColor = UIColor.gray
-            self.profileImage.layer.cornerRadius = 40
+            self.profileImage.layer.cornerRadius = 33
             self.profileImage.clipsToBounds = true
             self.profileImage.image = pickedImage
             

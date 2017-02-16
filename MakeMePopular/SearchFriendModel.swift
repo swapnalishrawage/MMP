@@ -29,6 +29,7 @@ class SearchFriendModel: Mappable{
     var deviceId:String?
     var interestName:String?
     var requestStatus:String?
+    var age:Int?
     
     required init?(map: Map) {
         
@@ -53,6 +54,7 @@ class SearchFriendModel: Mappable{
         lastMonthTrackedCount <- map["lastMonthTrackedCount"]
         interestName <- map["interestName"]
         requestStatus <- map["requestStatus"]
+        age <- map["age"]
         
     }
     init() {

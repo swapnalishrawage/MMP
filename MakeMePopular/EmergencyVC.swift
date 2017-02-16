@@ -14,6 +14,7 @@ class EmergencyVC: UIViewController, UICollectionViewDelegate,UICollectionViewDa
     
     @IBOutlet weak var help: UIImageView!
    
+    @IBOutlet weak var noData: UITextView!
     @IBOutlet weak var messagetext: UITextView!
     var emergency=[InterestModel]()
     var emergencyContactList=[FriendListModel]()
@@ -38,6 +39,10 @@ class EmergencyVC: UIViewController, UICollectionViewDelegate,UICollectionViewDa
         emergencyCV.delegate = self
         emergencyCV.dataSource = self
         
+        self.noData.isHidden = true
+        self.emergencyContactTable.isHidden = false
+        
+        
         if(Reachability.isConnectedToNetwork())
         {
             self.showActivityIndicator()
@@ -45,6 +50,7 @@ class EmergencyVC: UIViewController, UICollectionViewDelegate,UICollectionViewDa
             
         }else {
             
+                        
             let credentialerror = UIAlertController(title: "No Internet Connection", message: "Make sure your device is connected to the internet.", preferredStyle: .alert)
             
             let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler:nil)
@@ -56,7 +62,7 @@ class EmergencyVC: UIViewController, UICollectionViewDelegate,UICollectionViewDa
         
         setMessage()
         setUpView()
-        utils.createGradientLayer(view: self.view)
+       
         
     }
     
@@ -71,9 +77,8 @@ class EmergencyVC: UIViewController, UICollectionViewDelegate,UICollectionViewDa
         let adrs = UserDefaults.standard.value(forKey: "UserAdrs") as! String
         let city = UserDefaults.standard.value(forKey: "UserCity") as! String
         
-        msg = "Please help , I am in trouble Address: "+adrs+" , "+city
+        msg = "Medical Emergency, I need help at: "+adrs+" , "+city
       
-        
         messagetext.text = msg
     }
     
@@ -131,7 +136,7 @@ class EmergencyVC: UIViewController, UICollectionViewDelegate,UICollectionViewDa
     }
         else {
             
-            let credentialerror = UIAlertController(title: "Emergency", message: "No Users in emergency contact list", preferredStyle: .alert)
+            let credentialerror = UIAlertController(title: "Emergency", message: "No Emergency friends are added.", preferredStyle: .alert)
             
             let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler:nil)
             
@@ -174,7 +179,7 @@ class EmergencyVC: UIViewController, UICollectionViewDelegate,UICollectionViewDa
                 
                 let cancleAction = UIAlertAction(title: "Ok", style: .cancel) {
                     UIAlertAction in
-                    self.setMessage()
+                    //self.setMessage()
                     
                 }
                 
@@ -228,16 +233,25 @@ class EmergencyVC: UIViewController, UICollectionViewDelegate,UICollectionViewDa
                 let res = Mapper<FriendListModel>().mapArray(JSONObject: result.value)
                 
                 if((res?.count)! > 0){
+                    self.noData.isHidden = true
+                    self.emergencyContactTable.isHidden = false
                     self.emergencyContactList = res!
                     self.emergencyContactTable.delegate = self
                     self.emergencyContactTable.dataSource = self
                     self.emergencyContactTable.reloadData()
                     self.emergencyContactTable.isHidden = false
                 }
+                else{
+                    self.noData.isHidden = false
+                    self.emergencyContactTable.isHidden = true
+                }
                 self.view.isUserInteractionEnabled = true
                 self.hideActivityIndicator()
             }
             else{
+                self.noData.isHidden = true
+                self.emergencyContactTable.isHidden = false
+                
                 self.view.isUserInteractionEnabled = true
                 self.hideActivityIndicator()
                 let credentialerror = UIAlertController(title: "Emergency", message: "Faliled to fetch Emergency contact, please try after some time.", preferredStyle: .alert)
@@ -273,7 +287,7 @@ class EmergencyVC: UIViewController, UICollectionViewDelegate,UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        var bgcolor = "00BCD4"
+        var bgcolor = "FF6347"
         if(!emergency[indexPath.row].isSelected){
             bgcolor = "ffffff"
         }
@@ -317,8 +331,22 @@ class EmergencyVC: UIViewController, UICollectionViewDelegate,UICollectionViewDa
             selected = false
             bgcolor = "00BCD4"
         }else{
+            let adrs = UserDefaults.standard.value(forKey: "UserAdrs") as! String
+            let city = UserDefaults.standard.value(forKey: "UserCity") as! String
+
+            
             selected = true
-            msg = emergency[indexPath.row]._interestName + " Emergency: " + msg
+            if(emergency[indexPath.row]._interestName == "Medical"){
+              msg = "Medical Emergency, I need help at: " + adrs + ", " + city
+            }
+            else if(emergency[indexPath.row]._interestName == "Trouble"){
+                msg = "I am in Trouble, need help at " + adrs + ", " + city
+            }
+            else if(emergency[indexPath.row]._interestName == "Accident"){
+                msg = "I have met an accident at " + adrs + ", " + city
+            }
+            
+           
             messagetext.text = msg
             
             for i in 0...2{

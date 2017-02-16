@@ -35,7 +35,7 @@ class NearMePlaces: UIViewController, CLLocationManagerDelegate, GMSMapViewDeleg
     var loadingView: UIView = UIView()
     
     var isFilterOpen:Bool = false
-    let maptask = MapTask()
+    
     var searchType:String = ""
     var rad:String = ""
     let nearbyPlaces = "https://maps.googleapis.com/maps/api/place/search/json?"
@@ -374,7 +374,7 @@ class NearMePlaces: UIViewController, CLLocationManagerDelegate, GMSMapViewDeleg
         locationMarker = GMSMarker(position: coordinate)
         let view1:UIView = UIView(frame: CGRect(x: 0, y: 0, width: 150, height: 75))
         let uiImageView:UILabel  = UILabel(frame: CGRect(x: 55, y: 0, width: 40, height: 40))
-        let info1:UITextView = UITextView(frame: CGRect(x: 0, y: 40, width: 150, height: 75))
+        let info1:UITextView = UITextView(frame: CGRect(x: 0, y: 40, width: 150, height: 50))
         
         
         
@@ -382,7 +382,7 @@ class NearMePlaces: UIViewController, CLLocationManagerDelegate, GMSMapViewDeleg
         
         info1.backgroundColor = UIColor.clear
         info1.textColor = utils.hexStringToUIColor(hex: "555555")
-        info1.font = UIFont(name: "Avenir", size: 15)
+        info1.font = UIFont(name: "Avenir", size: 8)
         info1.text = info
         info1.textAlignment = .center
         

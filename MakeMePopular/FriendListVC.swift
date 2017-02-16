@@ -35,6 +35,7 @@ class FriendListVC: UIViewController , UITableViewDataSource, UITableViewDelegat
     @IBOutlet weak var back: UIImageView!
     var isSentRequest:Bool!
     
+    @IBOutlet weak var filterSegmentHeight: NSLayoutConstraint!
     var spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
     var loadingView: UIView = UIView()
 
@@ -63,6 +64,9 @@ class FriendListVC: UIViewController , UITableViewDataSource, UITableViewDelegat
         
         friendListTable.delegate = self
         friendListTable.dataSource = self
+        
+        filetrrequest.isHidden = true
+        filterSegmentHeight.constant = 0
         
         setUpView()
         
@@ -103,7 +107,7 @@ class FriendListVC: UIViewController , UITableViewDataSource, UITableViewDelegat
         infoPending.image = UIImage.fontAwesomeIcon(name: .hourglass1, textColor: utils.hexStringToUIColor(hex: "7D898B"), size: CGSize(width: 35, height: 35))
         
         
-        blocked.image = UIImage.fontAwesomeIcon(name: .timesCircleO, textColor: utils.hexStringToUIColor(hex: "DD2518"), size: CGSize(width: 35, height: 35))
+        blocked.image = UIImage.fontAwesomeIcon(name: .timesCircle, textColor: utils.hexStringToUIColor(hex: "DD2518"), size: CGSize(width: 35, height: 35))
         
 
 
@@ -339,13 +343,14 @@ class FriendListVC: UIViewController , UITableViewDataSource, UITableViewDelegat
         
         header?.accept.tag = section
         header?.arrowLabel.tag = section
-        if(isSentRequest == true){
+      /*  if(isSentRequest == true){
           header = setHeaderFRSent(header: header!, section: section)
         }
         else{
             header = setHeaderFRRecieved(header: header!, section: section)
 
-        }
+        }*/
+        header = setHeaderFRRecieved(header: header!, section: section)
         
         let v = sections[section].friendName
         let stArr = v?.components(separatedBy: " ")
@@ -384,6 +389,7 @@ func setHeaderFRRecieved(header:CollapsibleTableViewHeader,section:Int) -> Colla
   
     
     if(sections[section].status == "Pending"){
+        if(sections[section].isRequestSent == false){
         header.arrowLabel.textColor = utils.hexStringToUIColor(hex: "DD2518")
         header.arrowLabel.font = UIFont.fontAwesome(ofSize: 25)
         header.arrowLabel.text = String.fontAwesomeIcon(name: .close)
@@ -405,6 +411,14 @@ func setHeaderFRRecieved(header:CollapsibleTableViewHeader,section:Int) -> Colla
         header.arrowLabel.addGestureRecognizer(singleTap1)
         header.arrowLabel.layer.borderWidth = 2
         header.arrowLabel.layer.borderColor = utils.hexStringToUIColor(hex: "DD2518").cgColor
+        }
+        else{
+            header.arrowLabel.textColor = utils.hexStringToUIColor(hex: "7D898B")
+            header.arrowLabel.font = UIFont.fontAwesome(ofSize: 25)
+            header.arrowLabel.text = String.fontAwesomeIcon(name: .hourglass1)
+            
+
+        }
         
     }
     else if(sections[section].status == "Rejected"){
@@ -515,7 +529,7 @@ func setHeaderFRSent(header:CollapsibleTableViewHeader,section:Int) -> Collapsib
                 
                 if((res?.count)! > 0){
                     
-                    for i in 0...((res?.count)!-1){
+                 /*   for i in 0...((res?.count)!-1){
                         
                     if((res![i].isRequestSent) == true){
                             self.sentList.append(res![i])
@@ -523,8 +537,8 @@ func setHeaderFRSent(header:CollapsibleTableViewHeader,section:Int) -> Collapsib
                     else{
                         self.recievedList.append(res![i])
                         }
-                    }
-                    
+                    }*/
+                    self.recievedList = res!
                     self.sections = self.recievedList
                     self.friendListTable.delegate = self
                     self.friendListTable.dataSource = self
@@ -819,12 +833,12 @@ func setHeaderFRSent(header:CollapsibleTableViewHeader,section:Int) -> Collapsib
             
               }
         else{
-            isSentRequest = true
+          /*  isSentRequest = true
             
             self.sections = sentList
             self.friendListTable.delegate = self
             self.friendListTable.dataSource = self
-            self.friendListTable.reloadData()
+            self.friendListTable.reloadData()*/
         }
     }
     

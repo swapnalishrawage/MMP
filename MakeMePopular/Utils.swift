@@ -183,7 +183,7 @@ class Utils{
     func getEmergency() ->[InterestModel]{
         var emergency = [InterestModel]()
         
-        let e1 = InterestModel(interest: "Medical", isselected: false)
+        let e1 = InterestModel(interest: "Medical", isselected: true)
         emergency.append(e1)
         
         let e2 = InterestModel(interest: "Trouble", isselected: false)
@@ -295,6 +295,12 @@ class Utils{
         else if(interest == "Notification"){
             iconView.image = UIImage.fontAwesomeIcon(name: .bell, textColor: hexStringToUIColor(hex: txtColor), size: CGSize(width: 60, height: 60))
         }
+        else if(interest == "Chat"){
+            iconView.image = UIImage.fontAwesomeIcon(name: .wechat, textColor: hexStringToUIColor(hex: txtColor), size: CGSize(width: 60, height: 60))
+        }
+        else if(interest == "Album"){
+            iconView.image = UIImage.fontAwesomeIcon(name: .filePhotoO, textColor: hexStringToUIColor(hex: txtColor), size: CGSize(width: 60, height: 60))
+        }
 
     }
 
@@ -355,6 +361,15 @@ func hexStringToUIColor (hex:String) -> UIColor {
         }
     }
     
+    func getCurrentDate() -> String{
+        var localDate:String = ""
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy h:mm a"
+        dateFormatter.timeZone = TimeZone.current
+        localDate = dateFormatter.string(from: date)
+        return localDate
+    }
     
 }
 

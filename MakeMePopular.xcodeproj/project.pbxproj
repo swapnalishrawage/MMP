@@ -43,6 +43,18 @@
 		04788D601E4081CD003A0FC9 /* ImageToText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04788D5F1E4081CD003A0FC9 /* ImageToText.swift */; };
 		04788D621E408232003A0FC9 /* PhotosDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04788D611E408232003A0FC9 /* PhotosDataManager.swift */; };
 		04788D641E4082D7003A0FC9 /* DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04788D631E4082D7003A0FC9 /* DownloadImage.swift */; };
+		048A13CC1E5329E800D011A3 /* ThreadListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A13CB1E5329E800D011A3 /* ThreadListVC.swift */; };
+		048A13CE1E532BD300D011A3 /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A13CD1E532BD300D011A3 /* DateUtil.swift */; };
+		048A13D01E532FB300D011A3 /* LastMessageTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A13CF1E532FB300D011A3 /* LastMessageTableCell.swift */; };
+		048A13D21E53317F00D011A3 /* LastMsgDtls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A13D11E53317F00D011A3 /* LastMsgDtls.swift */; };
+		048A13D41E5331B900D011A3 /* ThreadlistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A13D31E5331B900D011A3 /* ThreadlistModel.swift */; };
+		048A13D71E53325900D011A3 /* DBThreadList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A13D61E53325900D011A3 /* DBThreadList.swift */; };
+		048A13D91E53332400D011A3 /* SelectMessageCenterListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A13D81E53332400D011A3 /* SelectMessageCenterListVC.swift */; };
+		048A13DB1E53336900D011A3 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A13DA1E53336900D011A3 /* Message.swift */; };
+		048A13DD1E53339800D011A3 /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A13DC1E53339800D011A3 /* MessageModel.swift */; };
+		048A13DF1E5333EC00D011A3 /* DBMessageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A13DE1E5333EC00D011A3 /* DBMessageList.swift */; };
+		048A13E11E53343900D011A3 /* MessageCenterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A13E01E53343900D011A3 /* MessageCenterCell.swift */; };
+		048A13E31E533BFA00D011A3 /* MessageCenterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A13E21E533BFA00D011A3 /* MessageCenterVC.swift */; };
 		04A4666A1E444F8400D693B3 /* NotifiationListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A466691E444F8400D693B3 /* NotifiationListVC.swift */; };
 		04A4666C1E44531A00D693B3 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A4666B1E44531A00D693B3 /* NotificationCell.swift */; };
 		04A4666E1E44542600D693B3 /* NotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A4666D1E44542600D693B3 /* NotificationModel.swift */; };
@@ -106,6 +118,18 @@
 		04788D5F1E4081CD003A0FC9 /* ImageToText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageToText.swift; sourceTree = "<group>"; };
 		04788D611E408232003A0FC9 /* PhotosDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosDataManager.swift; sourceTree = "<group>"; };
 		04788D631E4082D7003A0FC9 /* DownloadImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadImage.swift; sourceTree = "<group>"; };
+		048A13CB1E5329E800D011A3 /* ThreadListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadListVC.swift; sourceTree = "<group>"; };
+		048A13CD1E532BD300D011A3 /* DateUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
+		048A13CF1E532FB300D011A3 /* LastMessageTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastMessageTableCell.swift; sourceTree = "<group>"; };
+		048A13D11E53317F00D011A3 /* LastMsgDtls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastMsgDtls.swift; sourceTree = "<group>"; };
+		048A13D31E5331B900D011A3 /* ThreadlistModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadlistModel.swift; sourceTree = "<group>"; };
+		048A13D61E53325900D011A3 /* DBThreadList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBThreadList.swift; sourceTree = "<group>"; };
+		048A13D81E53332400D011A3 /* SelectMessageCenterListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectMessageCenterListVC.swift; sourceTree = "<group>"; };
+		048A13DA1E53336900D011A3 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		048A13DC1E53339800D011A3 /* MessageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
+		048A13DE1E5333EC00D011A3 /* DBMessageList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBMessageList.swift; sourceTree = "<group>"; };
+		048A13E01E53343900D011A3 /* MessageCenterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCenterCell.swift; sourceTree = "<group>"; };
+		048A13E21E533BFA00D011A3 /* MessageCenterVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCenterVC.swift; sourceTree = "<group>"; };
 		04A466691E444F8400D693B3 /* NotifiationListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotifiationListVC.swift; sourceTree = "<group>"; };
 		04A4666B1E44531A00D693B3 /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		04A4666D1E44542600D693B3 /* NotificationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationModel.swift; sourceTree = "<group>"; };
@@ -159,6 +183,10 @@
 				04CEE0C01E421781005B64BC /* NearByPlacesModel.swift */,
 				04C15EEA1E4332EF00C4070A /* SetLocationResModel.swift */,
 				04A4666D1E44542600D693B3 /* NotificationModel.swift */,
+				048A13D11E53317F00D011A3 /* LastMsgDtls.swift */,
+				048A13D31E5331B900D011A3 /* ThreadlistModel.swift */,
+				048A13DA1E53336900D011A3 /* Message.swift */,
+				048A13DC1E53339800D011A3 /* MessageModel.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -175,6 +203,8 @@
 				041ED3BB1E2E330300DE97EF /* HeaderView.xib */,
 				04C873D11E31F4D700B667A9 /* EmergencyContactCell.swift */,
 				04A4666B1E44531A00D693B3 /* NotificationCell.swift */,
+				048A13CF1E532FB300D011A3 /* LastMessageTableCell.swift */,
+				048A13E01E53343900D011A3 /* MessageCenterCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -201,6 +231,9 @@
 				04A466691E444F8400D693B3 /* NotifiationListVC.swift */,
 				04A466701E44987700D693B3 /* NotificationDetailVC.swift */,
 				04A466721E44BBD200D693B3 /* AboutVC.swift */,
+				048A13CB1E5329E800D011A3 /* ThreadListVC.swift */,
+				048A13D81E53332400D011A3 /* SelectMessageCenterListVC.swift */,
+				048A13E21E533BFA00D011A3 /* MessageCenterVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -241,6 +274,7 @@
 				037156D81E26626F00472E80 /* Controller */,
 				037156D71E26626400472E80 /* View */,
 				037156D61E26625600472E80 /* Model */,
+				048A13D51E53323C00D011A3 /* DataBaseMethods */,
 				0372D7131E24D15400B165B4 /* AppDelegate.swift */,
 				04D316F91E4B374E006417C0 /* CustomSlider.swift */,
 				037156E01E266E0F00472E80 /* Constants.swift */,
@@ -256,6 +290,7 @@
 				0372D7221E24D15400B165B4 /* Info.plist */,
 				0372D71A1E24D15400B165B4 /* MakeMePopular.xcdatamodeld */,
 				04D316F81E4B01EE006417C0 /* MakeMePopular-Bridging-Header.h */,
+				048A13CD1E532BD300D011A3 /* DateUtil.swift */,
 			);
 			path = MakeMePopular;
 			sourceTree = "<group>";
@@ -266,6 +301,15 @@
 				03C1E31B1E2766F30071A174 /* MapTask.swift */,
 			);
 			name = Map;
+			sourceTree = "<group>";
+		};
+		048A13D51E53323C00D011A3 /* DataBaseMethods */ = {
+			isa = PBXGroup;
+			children = (
+				048A13D61E53325900D011A3 /* DBThreadList.swift */,
+				048A13DE1E5333EC00D011A3 /* DBMessageList.swift */,
+			);
+			name = DataBaseMethods;
 			sourceTree = "<group>";
 		};
 		7E8A28683ADE088276861718 /* Pods */ = {
@@ -421,6 +465,7 @@
 			files = (
 				041ED3B41E2E29C100DE97EF /* Extensions.swift in Sources */,
 				04D316FA1E4B374E006417C0 /* CustomSlider.swift in Sources */,
+				048A13CC1E5329E800D011A3 /* ThreadListVC.swift in Sources */,
 				037156D11E26303E00472E80 /* InterestVC.swift in Sources */,
 				04CEE0BF1E41DB42005B64BC /* NearMePlaces.swift in Sources */,
 				041ED3BE1E2E4C8200DE97EF /* FriendlistCell.swift in Sources */,
@@ -429,13 +474,16 @@
 				04D263FF1E2DEA7C00FE99F4 /* SearchFriendModel.swift in Sources */,
 				045F65B91E3779BF0031E631 /* NotificationVC.swift in Sources */,
 				03901EC01E24E52D00D516C9 /* Utils.swift in Sources */,
+				048A13D21E53317F00D011A3 /* LastMsgDtls.swift in Sources */,
 				04A4666A1E444F8400D693B3 /* NotifiationListVC.swift in Sources */,
 				0372D71C1E24D15400B165B4 /* MakeMePopular.xcdatamodeld in Sources */,
+				048A13DF1E5333EC00D011A3 /* DBMessageList.swift in Sources */,
 				04DB85491E35C85000D1B0DF /* TrackFriendModel.swift in Sources */,
 				037156DF1E266C2700472E80 /* SetLocationAPI.swift in Sources */,
 				04CEE0BB1E419904005B64BC /* ProfileInfo.swift in Sources */,
 				03C84ABB1E290EC900497B5B /* AddFriendVC.swift in Sources */,
 				037156DA1E2663A800472E80 /* UserDetail.swift in Sources */,
+				048A13D01E532FB300D011A3 /* LastMessageTableCell.swift in Sources */,
 				041ED3B61E2E29FC00DE97EF /* CollapsibleTableViewHeader.swift in Sources */,
 				04D02D921E388F2900CB19A0 /* Reachability.swift in Sources */,
 				04C873D01E31E01400B667A9 /* NearMeFriendVC.swift in Sources */,
@@ -443,29 +491,37 @@
 				04CEE0BD1E41DAF1005B64BC /* IntroductionVC.swift in Sources */,
 				03C1E31C1E2766F30071A174 /* MapTask.swift in Sources */,
 				037156D31E263BCA00472E80 /* InterestCell.swift in Sources */,
+				048A13E11E53343900D011A3 /* MessageCenterCell.swift in Sources */,
 				037115161E25F67600EF90A9 /* LoginVC.swift in Sources */,
 				041ED3B81E2E2B6400DE97EF /* CollapsibleTableViewController.swift in Sources */,
+				048A13D71E53325900D011A3 /* DBThreadList.swift in Sources */,
 				04C15EEB1E4332EF00C4070A /* SetLocationResModel.swift in Sources */,
 				04A466731E44BBD200D693B3 /* AboutVC.swift in Sources */,
 				03C84AB51E28BB3A00497B5B /* BarChartFormatter.swift in Sources */,
 				04DB85471E35C0E700D1B0DF /* NearByFriendResponseModel.swift in Sources */,
 				04D02D941E38C9F900CB19A0 /* FreindRequestNotificationVC.swift in Sources */,
 				037156E11E266E0F00472E80 /* Constants.swift in Sources */,
+				048A13E31E533BFA00D011A3 /* MessageCenterVC.swift in Sources */,
 				041ED3BA1E2E2E4700DE97EF /* FriendListVC.swift in Sources */,
 				04CE15471E370EA5008F6A47 /* TrackDialogueVC.swift in Sources */,
 				04C873D21E31F4D700B667A9 /* EmergencyContactCell.swift in Sources */,
+				048A13DB1E53336900D011A3 /* Message.swift in Sources */,
+				048A13CE1E532BD300D011A3 /* DateUtil.swift in Sources */,
 				037156D51E263E2E00472E80 /* InterestModel.swift in Sources */,
 				04A466711E44987700D693B3 /* NotificationDetailVC.swift in Sources */,
 				04D06C881E309A1500CAB7E2 /* InterestListModel.swift in Sources */,
 				03C84ABD1E290FF200497B5B /* AddFriendCell.swift in Sources */,
 				03C84AB91E28D1C200497B5B /* EmergencyCell.swift in Sources */,
 				0372D7161E24D15400B165B4 /* MainVC.swift in Sources */,
+				048A13D41E5331B900D011A3 /* ThreadlistModel.swift in Sources */,
 				04788D641E4082D7003A0FC9 /* DownloadImage.swift in Sources */,
 				04788D621E408232003A0FC9 /* PhotosDataManager.swift in Sources */,
 				037156DC1E2666F800472E80 /* FriendsDetail.swift in Sources */,
 				041ED3C01E2E4DCF00DE97EF /* FriendListModel.swift in Sources */,
 				04A4666E1E44542600D693B3 /* NotificationModel.swift in Sources */,
 				04CEE0C11E421781005B64BC /* NearByPlacesModel.swift in Sources */,
+				048A13D91E53332400D011A3 /* SelectMessageCenterListVC.swift in Sources */,
+				048A13DD1E53339800D011A3 /* MessageModel.swift in Sources */,
 				04788D601E4081CD003A0FC9 /* ImageToText.swift in Sources */,
 				04A4666C1E44531A00D693B3 /* NotificationCell.swift in Sources */,
 				0372D7141E24D15400B165B4 /* AppDelegate.swift in Sources */,
@@ -602,6 +658,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "MakeMePopular/MakeMePopular-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -619,6 +676,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "MakeMePopular/MakeMePopular-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

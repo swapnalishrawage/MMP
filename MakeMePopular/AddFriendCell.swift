@@ -13,6 +13,7 @@ class AddFriendCell: UITableViewCell {
     
     @IBOutlet weak var profilePic: UIImageView!
    
+    @IBOutlet weak var genderAge: UILabel!
     @IBOutlet weak var addfriend: UIImageView!
     @IBOutlet weak var username: UILabel!
     override func awakeFromNib() {
@@ -22,6 +23,7 @@ class AddFriendCell: UITableViewCell {
     func updateCell(user:SearchFriendModel){
        let utils = Utils()
         username.text = user.fName! + " " + user.lName!
+        genderAge.text = user.gender! + "," + "\(user.age!)"
         
         if(user.requestStatus == "Pending"){
             addfriend.image = UIImage.fontAwesomeIcon(name: .hourglass1, textColor: utils.hexStringToUIColor(hex: "7D898B"), size: CGSize(width: 35, height: 35))
