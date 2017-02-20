@@ -143,7 +143,7 @@ class LoginVC: UIViewController, UINavigationControllerDelegate, CLLocationManag
             
               }
              else{
-            if(FIRInstanceID.instanceID().token() != nil){
+               if(FIRInstanceID.instanceID().token() != nil){
                 
                 refreshedToken = FIRInstanceID.instanceID().token()!
                 print("InstanceIdToken: \(refreshedToken)")
