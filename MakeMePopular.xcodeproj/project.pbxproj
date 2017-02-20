@@ -374,7 +374,7 @@
 					0372D70F1E24D15400B165B4 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = B3V896CVNT;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -662,12 +662,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MakeMePopular/MakeMePopular.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = B3V896CVNT;
 				INFOPLIST_FILE = MakeMePopular/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = www.realizertech.com.MakeMePopular;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "778143c9-6628-459a-a098-f8cb3b76c9cd";
+				PROVISIONING_PROFILE_SPECIFIER = "Find Me Friend Distribution Provisioning";
 				SWIFT_OBJC_BRIDGING_HEADER = "MakeMePopular/MakeMePopular-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -680,12 +683,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MakeMePopular/MakeMePopular.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = B3V896CVNT;
 				INFOPLIST_FILE = MakeMePopular/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = www.realizertech.com.MakeMePopular;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "778143c9-6628-459a-a098-f8cb3b76c9cd";
+				PROVISIONING_PROFILE_SPECIFIER = "Find Me Friend Distribution Provisioning";
 				SWIFT_OBJC_BRIDGING_HEADER = "MakeMePopular/MakeMePopular-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;

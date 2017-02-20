@@ -1365,6 +1365,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SMX-4z-IGz" userLabel="BottomView">
                                 <rect key="frame" x="-4" y="518" width="328" height="50"/>
                                 <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="map_btn_bg" translatesAutoresizingMaskIntoConstraints="NO" id="9Fl-yb-2XZ">
+                                        <rect key="frame" x="0.0" y="0.0" width="328" height="50"/>
+                                    </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yuF-Yo-GO9" userLabel="prev">
                                         <rect key="frame" x="10" y="5" width="40" height="40"/>
                                         <constraints>
@@ -1389,14 +1392,18 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.0" green="0.73725490199999999" blue="0.83137254900000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="1bU-MR-fOu"/>
                                     <constraint firstItem="yuF-Yo-GO9" firstAttribute="leading" secondItem="SMX-4z-IGz" secondAttribute="leading" constant="10" id="2Bb-Jp-70e"/>
+                                    <constraint firstItem="9Fl-yb-2XZ" firstAttribute="top" secondItem="SMX-4z-IGz" secondAttribute="top" id="6IP-41-hEa"/>
                                     <constraint firstItem="XKv-U1-zqz" firstAttribute="centerY" secondItem="SMX-4z-IGz" secondAttribute="centerY" id="Ajm-Wd-MeA"/>
                                     <constraint firstItem="XKv-U1-zqz" firstAttribute="leading" secondItem="5hd-iZ-qzu" secondAttribute="trailing" constant="10" id="M9I-e7-a3G"/>
                                     <constraint firstItem="yuF-Yo-GO9" firstAttribute="centerY" secondItem="SMX-4z-IGz" secondAttribute="centerY" id="VLM-q6-eRH"/>
+                                    <constraint firstItem="9Fl-yb-2XZ" firstAttribute="leading" secondItem="SMX-4z-IGz" secondAttribute="leading" id="WWK-bq-ozb"/>
                                     <constraint firstItem="5hd-iZ-qzu" firstAttribute="leading" secondItem="yuF-Yo-GO9" secondAttribute="trailing" constant="10" id="aX9-uf-K6a"/>
+                                    <constraint firstAttribute="bottom" secondItem="9Fl-yb-2XZ" secondAttribute="bottom" id="epx-4l-4qh"/>
+                                    <constraint firstAttribute="trailing" secondItem="9Fl-yb-2XZ" secondAttribute="trailing" id="p0y-1r-7Va"/>
                                     <constraint firstItem="5hd-iZ-qzu" firstAttribute="centerY" secondItem="SMX-4z-IGz" secondAttribute="centerY" id="ueY-xk-J6G"/>
                                     <constraint firstAttribute="trailing" secondItem="XKv-U1-zqz" secondAttribute="trailing" constant="10" id="vir-1v-4qa"/>
                                 </constraints>
@@ -4251,6 +4258,7 @@
         <image name="find_me_new_logo" width="256" height="256"/>
         <image name="fmf_logo" width="256" height="256"/>
         <image name="ic_add" width="80" height="80"/>
+        <image name="map_btn_bg" width="400" height="100"/>
         <image name="nouser" width="400" height="400"/>
         <image name="setting-@1x" width="16" height="16"/>
     </resources>
