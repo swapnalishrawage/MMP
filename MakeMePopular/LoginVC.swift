@@ -24,7 +24,9 @@ class LoginVC: UIViewController, UINavigationControllerDelegate, CLLocationManag
     @IBOutlet weak var signup: UILabel!
     @IBOutlet weak var submit: UIButton!
     @IBOutlet weak var topImage: UIImageView!
-    
+    var dbth=DBThreadList()
+    var friend1=FriendListDetail()
+    var dbmsg=DBMessageList()
     
     var spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
     var loadingView: UIView = UIView()
@@ -109,6 +111,10 @@ class LoginVC: UIViewController, UINavigationControllerDelegate, CLLocationManag
     
     
     @IBAction func submitClick(_ sender: Any) {
+        
+        dbth.deleteallvalues()
+        friend1.deleteallvalues()
+        dbmsg.deleteallvalues()
         
         locationManager.stopUpdatingLocation()
         

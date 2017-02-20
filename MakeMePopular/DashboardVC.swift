@@ -87,6 +87,14 @@ class DashboardVC:UIViewController, UICollectionViewDelegate,UICollectionViewDat
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
         }
+        else{
+            let credentialerror = UIAlertController(title: "Location Service", message: "Please Enable Your location service to use this app", preferredStyle: .alert)
+            
+            let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler:nil)
+            
+            credentialerror.addAction(cancelAction)
+            self.present(credentialerror, animated: true, completion: {  })
+        }
     
     }
     

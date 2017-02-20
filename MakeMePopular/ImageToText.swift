@@ -15,7 +15,7 @@ class ImageToText{
         
         // Setup the font specific variables
         let textColor: UIColor = UIColor.white
-        let textFont: UIFont =  UIFont(name: "Avenir", size: 100)!
+        let textFont: UIFont =  UIFont(name: "Avenir", size: 75)!
         //let textStyle = UIFontWeightHeavy
         let textStyle  = NSTextEffectLetterpressStyle
         

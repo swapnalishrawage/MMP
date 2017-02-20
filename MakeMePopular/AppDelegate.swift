@@ -13,6 +13,7 @@ import FirebaseMessaging
 import Firebase
 import GoogleMaps
 import Alamofire
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate,CLLocationManagerDelegate, GMSMapViewDelegate {
 
@@ -25,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CLLocationManagerDelegate,
         // Override point for customization after application launch.
         GMSServices.provideAPIKey("AIzaSyBRCaTuWAP6PwYSS2DEmEpxTFaWdOBiVqM")
         
-        
+    
         if #available(iOS 8.0, *){
             let settings:UIUserNotificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
             application.registerUserNotificationSettings(settings)
@@ -105,6 +106,98 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CLLocationManagerDelegate,
                 
                 
                 
+            }
+                else if(type == "SendMessage")
+            {
+                print(userInfo)
+                var message:String!
+                var sendby:String!
+                var thid:String!
+                var time:String!
+                var participateid:String!
+                var image:String!
+                var msgid:Any!
+                var initiateid:Any!
+                var notificationId:Any!
+                var gcmid:Any!
+                if let messageID1 = userInfo["messageId"] {
+                    print("Message ID: \(messageID1)")
+                    msgid = messageID1
+                    UserDefaults.standard.set(msgid, forKey: "MessageID")
+                    print(msgid)
+                }
+                if let Gcmid = userInfo["gcm.message_id"] {
+                    print("gcm.message_id ID: \(Gcmid)")
+                    gcmid=Gcmid
+                    print(gcmid)
+                }
+                if let NotificationId = userInfo["NotificationId"] {
+                    print("noti ID: \(NotificationId)")
+                    notificationId=NotificationId
+                    print(notificationId)
+                }
+                if let initiateId1 = userInfo["initiateId"] {
+                    print("Initiate ID: \(initiateId1)")
+                    initiateid=initiateId1
+                    UserDefaults.standard.set(initiateid, forKey: "InitiateID")
+                    print(initiateid )
+                }
+                
+                if let img=userInfo["senderThumbnailUrl"] as? String{
+                    image=img
+                    print(image)
+                    if(img=="")
+                    {
+                        UserDefaults.standard.set("", forKey: "SenderPic")
+                    }
+                    else{
+                        UserDefaults.standard.set(image, forKey: "SenderPic")
+                    }
+                    
+                }
+                
+                if let threadid=userInfo["threadId"] as? String{
+                    thid=threadid
+                    UserDefaults.standard.set(thid, forKey: "THID")
+                }
+                if let partiid=userInfo["participantId"] as? String{
+                    participateid=partiid
+                    UserDefaults.standard.set(participateid, forKey: "ParticipateID")
+                    
+                }
+                
+                if let timestam=userInfo["timeStamp"] as? String{
+                    time=timestam
+                    UserDefaults.standard.set(time, forKey: "Time")
+                    
+                }
+                if let aps = userInfo["aps"] as? NSDictionary {
+                    if let alert = aps["alert"] as? NSDictionary {
+                        if let alertMessage = alert["body"] as? String {
+                            message = alertMessage
+                            UserDefaults.standard.set(message, forKey: "MSG")
+                        }
+                        if let title = alert["title"] as? String {
+                            sendby = title
+                            UserDefaults.standard.set(sendby, forKey: "SendBy")
+                            
+                        }
+                        
+                    }
+                }
+                print(message)
+                print(sendby)
+                
+                let alert0 : AnyObject?=userInfo["aps"] as AnyObject?
+                print(alert0!)
+                let a:AnyObject=alert0 as AnyObject
+                print(a)
+                
+                
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadThread"), object: nil)
+                
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadMessage"), object: nil)
+
             }
             else if(type == "Emergency"){
                 
@@ -197,7 +290,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CLLocationManagerDelegate,
                 
                 rootVC?.navigationController?.pushViewController(mainvc, animated: true)
                 
+                
+                print(userInfo)
+                
+                
+                
+                
+                
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "recievednotif"), object: nil)
+               
             }
             
            
@@ -221,10 +322,92 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CLLocationManagerDelegate,
                 self.getCurrentLocation()
             }
             
-            print(userInfo)
-            
-            
-        }else if(application.applicationState == UIApplicationState.inactive){
+                         if(type == "SendMessage")
+             {
+                var message:String!
+                var sendby:String!
+                var thid:String!
+                var time:String!
+                var participateid:String!
+                var image:String!
+                var msgid:Any!
+                var initiateid:Any!
+                var notificationId:Any!
+                var gcmid:Any!
+                if let messageID1 = userInfo["messageId"] {
+                    print("Message ID: \(messageID1)")
+                    msgid = messageID1
+                    UserDefaults.standard.set(msgid, forKey: "MessageID")
+                    print(msgid)
+                }
+                if let Gcmid = userInfo["gcm.message_id"] {
+                    print("gcm.message_id ID: \(Gcmid)")
+                    gcmid=Gcmid
+                    print(gcmid)
+                }
+                if let NotificationId = userInfo["NotificationId"] {
+                    print("noti ID: \(NotificationId)")
+                    notificationId=NotificationId
+                    print(notificationId)
+                }
+                if let initiateId1 = userInfo["initiateId"] {
+                    print("Initiate ID: \(initiateId1)")
+                    initiateid=initiateId1
+                    UserDefaults.standard.set(initiateid, forKey: "InitiateID")
+                    print(initiateid )
+                }
+                
+                if let img=userInfo["senderThumbanilUrl"] as? String{
+                    image=img
+                    UserDefaults.standard.set(image, forKey: "SenderPic")
+                }
+                
+                if let threadid=userInfo["threadId"] as? String{
+                    thid=threadid
+                    UserDefaults.standard.set(thid, forKey: "THID")
+                }
+                if let partiid=userInfo["participantId"] as? String{
+                    participateid=partiid
+                    UserDefaults.standard.set(participateid, forKey: "ParticipateID")
+                    
+                }
+                
+                if let timestam=userInfo["timeStamp"] as? String{
+                    time=timestam
+                    UserDefaults.standard.set(time, forKey: "Time")
+                    
+                }
+                if let aps = userInfo["aps"] as? NSDictionary {
+                    if let alert = aps["alert"] as? NSDictionary {
+                        if let alertMessage = alert["body"] as? String {
+                            message = alertMessage
+                            UserDefaults.standard.set(message, forKey: "MSG")
+                        }
+                        if let title = alert["title"] as? String {
+                            sendby = title
+                            UserDefaults.standard.set(sendby, forKey: "SendBy")
+                            
+                        }
+                        
+                    }
+                }
+                print(message)
+                print(sendby)
+                
+                let alert0 : AnyObject?=userInfo["aps"] as AnyObject?
+                print(alert0!)
+                let a:AnyObject=alert0 as AnyObject
+                print(a)
+                
+                
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadThread"), object: nil)
+                
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadMessage"), object: nil)
+                
+            }
+        
+        }
+        else if(application.applicationState == UIApplicationState.inactive){
             
             //app is transitioning from background to foreground (user taps notification), do what you need when user taps here
             var type:String = ""
@@ -371,6 +554,89 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CLLocationManagerDelegate,
 
                 
             }
+            else if(type == "SendMessage")
+            {
+                var message:String!
+                var sendby:String!
+                var thid:String!
+                var time:String!
+                var participateid:String!
+                var image:String!
+                var msgid:Any!
+                var initiateid:Any!
+                var notificationId:Any!
+                var gcmid:Any!
+                if let messageID1 = userInfo["messageId"] {
+                    print("Message ID: \(messageID1)")
+                    msgid = messageID1
+                    UserDefaults.standard.set(msgid, forKey: "MessageID")
+                    print(msgid)
+                }
+                if let Gcmid = userInfo["gcm.message_id"] {
+                    print("gcm.message_id ID: \(Gcmid)")
+                    gcmid=Gcmid
+                    print(gcmid)
+                }
+                if let NotificationId = userInfo["NotificationId"] {
+                    print("noti ID: \(NotificationId)")
+                    notificationId=NotificationId
+                    print(notificationId)
+                }
+                if let initiateId1 = userInfo["initiateId"] {
+                    print("Initiate ID: \(initiateId1)")
+                    initiateid=initiateId1
+                    UserDefaults.standard.set(initiateid, forKey: "InitiateID")
+                    print(initiateid )
+                }
+                
+                if let img=userInfo["senderThumbanilUrl"] as? String{
+                    image=img
+                    UserDefaults.standard.set(image, forKey: "SenderPic")
+                }
+                
+                if let threadid=userInfo["threadId"] as? String{
+                    thid=threadid
+                    UserDefaults.standard.set(thid, forKey: "THID")
+                }
+                if let partiid=userInfo["participantId"] as? String{
+                    participateid=partiid
+                    UserDefaults.standard.set(participateid, forKey: "ParticipateID")
+                    
+                }
+                
+                if let timestam=userInfo["timeStamp"] as? String{
+                    time=timestam
+                    UserDefaults.standard.set(time, forKey: "Time")
+                    
+                }
+                if let aps = userInfo["aps"] as? NSDictionary {
+                    if let alert = aps["alert"] as? NSDictionary {
+                        if let alertMessage = alert["body"] as? String {
+                            message = alertMessage
+                            UserDefaults.standard.set(message, forKey: "MSG")
+                        }
+                        if let title = alert["title"] as? String {
+                            sendby = title
+                            UserDefaults.standard.set(sendby, forKey: "SendBy")
+                            
+                        }
+                        
+                    }
+                }
+                print(message)
+                print(sendby)
+                
+                let alert0 : AnyObject?=userInfo["aps"] as AnyObject?
+                print(alert0!)
+                let a:AnyObject=alert0 as AnyObject
+                print(a)
+                
+                
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadThread"), object: nil)
+                
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadMessage"), object: nil)
+                
+            }
             
             
             let pref = UserDefaults.standard
@@ -388,8 +654,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,CLLocationManagerDelegate,
             
             rootVC?.navigationController?.pushViewController(mainvc, animated: true)
             
-             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "recievednotif"), object: nil)
-            
+
+              NotificationCenter.default.post(name: NSNotification.Name(rawValue: "recievednotif"), object: nil)
         }
         else{
             if let notitype = userInfo["Type"] as? String {

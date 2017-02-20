@@ -50,8 +50,9 @@ class NearMePlaces: UIViewController, CLLocationManagerDelegate, GMSMapViewDeleg
         mapView.delegate = self
         self.mapView.isMyLocationEnabled = true
         
+        if(UserDefaults.standard.value(forKey: "latitude") != nil && UserDefaults.standard.value(forKey: "longitude") != nil){
         myLoc = CLLocation(latitude: UserDefaults.standard.value(forKey: "latitude") as! Double, longitude: UserDefaults.standard.value(forKey: "longitude") as! Double)
-        
+        }
         SetUpMap()
         
         setupView()

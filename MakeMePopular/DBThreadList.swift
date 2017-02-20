@@ -22,6 +22,10 @@ class DBThreadList: NSObject {
         if #available(iOS 10.0, *) {
             context = appdel.persistentContainer.viewContext
         } else {
+            
+            
+            
+            
             // Fallback on earlier versions
         }
         
@@ -34,7 +38,7 @@ class DBThreadList: NSObject {
         newuser.setValue(threadlist.threadName, forKey: "threadName")
         newuser.setValue(threadlist.thumbnailUrl, forKey: "thumbnailUrl")
         newuser.setValue(threadlist.lastSenderName, forKey:"lastSenderName")
-        newuser.setValue(threadlist.badgeCount, forKey: "badgeCount")
+        newuser.setValue(threadlist.badgeCount!, forKey: "badgeCount")
         newuser.setValue(threadlist.timeStamp , forKey: "timeStamp")
         newuser.setValue(threadlist.lastSenderById, forKey:"lastSenderById")
         newuser.setValue(threadlist.lastMessageId, forKey: "lastMessageId")
@@ -46,7 +50,7 @@ class DBThreadList: NSObject {
         newuser.setValue(threadlist.participantList!, forKey: "participantList")
         print(threadlist.participantList!)
         
-        
+        print(threadlist.badgeCount!)
         
         do {
             try self.context.save()
@@ -99,6 +103,49 @@ class DBThreadList: NSObject {
         
         return isPresent
     }
+    
+    
+    
+    func getreceiverId(receiverId:String) -> Bool {
+        
+        var isPresent:Bool = false
+        //create a fetch request, telling it about the entity
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Threadlist")
+        let predicate = NSPredicate(format: "participantList == %@", receiverId)
+        fetchRequest.predicate = predicate
+        
+        
+        do {
+            //go get the results
+            if #available(iOS 10.0, *) {
+                let searchResults = try getContext().fetch(fetchRequest)
+                for trans in searchResults as! [NSManagedObject] {
+                    //get the Key Value pairs (although there may be a better way to do that...
+                    
+                    var receiver:String = ""
+                    if(trans.value(forKey: "participantList") != nil){
+                        receiver = trans.value(forKey: "participantList") as! String
+                        isPresent = true
+                        print(receiver)
+                    }
+                    
+                }
+                print ("num of results = \(searchResults.count)")
+                
+            } else {
+                // Fallback on earlier versions
+            }
+            
+            //I like to check the size of the returned results!
+            
+            //You need to convert to NSManagedObject to use 'for' loops
+        } catch {
+            print("Error with request: \(error)")
+        }
+        
+        return isPresent
+    }
+
     func updatethreadlist(threadlist:ThreadlistModel)
     {
         let appdel:AppDelegate=UIApplication.shared.delegate as! AppDelegate
@@ -133,6 +180,64 @@ class DBThreadList: NSObject {
                     trans.setValue(threadlist.timeStamp, forKey: "timeStamp")
                     trans.setValue(threadlist.lastMessageText, forKey: "lastMessageText")
                     trans.setValue(threadlist.threadCustomName, forKey: "threadCustomName")
+                    trans.setValue(threadlist.badgeCount!, forKey: "badgeCount")
+                    print(threadlist.badgeCount!)
+                    //save the object
+                    do {
+                        try context.save()
+                        print("saved!")
+                    } catch let error as NSError  {
+                        print("Could not save \(error), \(error.userInfo)")
+                    } catch {
+                        
+                    }
+                    
+                }
+                
+            } else {
+                // Fallback on earlier versions
+            }
+            
+            //I like to check the size of the returned results!
+        }
+        catch {
+            // Do something in response to error condition
+        }
+        
+        
+    }
+    
+    
+    
+    func updatebadgecount(threadlist:String)
+    {
+        let appdel:AppDelegate=UIApplication.shared.delegate as! AppDelegate
+        if #available(iOS 10.0, *) {
+            context = appdel.persistentContainer.viewContext
+        } else {
+            // Fallback on earlier versions
+        }
+        
+        
+        let request=NSFetchRequest<NSFetchRequestResult>(entityName: "Threadlist")
+        
+               
+        let predicate = NSPredicate(format: "badgeCount == %@", threadlist)
+        request.predicate = predicate
+        print(threadlist)
+      let b="0"
+        do {
+            //go get the results
+            if #available(iOS 10.0, *) {
+                let searchResults = try getContext().fetch(request)
+                print ("num of results = \(searchResults.count)")
+                
+                //You need to convert to NSManagedObject to use 'for' loops
+                for trans in searchResults as! [NSManagedObject] {
+                    //get the Key Value pairs (although there may be a better way to do that...
+                 //  threadlist="0"
+                    trans.setValue(b, forKey: "badgeCount")
+                    print(threadlist)
                     //save the object
                     do {
                         try context.save()
@@ -278,11 +383,9 @@ class DBThreadList: NSObject {
                         participantList=trans.value(forKey: "participantList") as! String
                         print(participantList)
                     }
-                    
-                    let thread0=LastMsgDtls(LastMsgSender: lastSenderName, Lastmsgtext: lastMessageText, LastMsgTime:  timeStamp, LastmsgSenderimage: thumbnailUrl, ThreadName: threadCustomName,ThreadId: threadId,reciverId:participantList,InitiateId:initiateId)
-                    
-                    
-                    LastMsgList.append(thread0)
+                   
+                    let thread0=LastMsgDtls(LastMsgSender: lastSenderName, Lastmsgtext: lastMessageText, LastMsgTime:  timeStamp, LastmsgSenderimage: thumbnailUrl, ThreadName: threadCustomName,ThreadId: threadId,reciverId:participantList,InitiateId:initiateId,UnreadCount:badgeCount,LastSenderId:lastSenderById)
+                                      LastMsgList.append(thread0)
                 }
                 
                 

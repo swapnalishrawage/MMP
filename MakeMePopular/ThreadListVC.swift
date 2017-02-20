@@ -27,6 +27,7 @@ class ThreadListVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     @IBOutlet weak var leading: NSLayoutConstraint!
     var menushow=false
     var c:Int=0
+     let dbMsg = DBThreadList()
     var listcount:Int!
     @IBOutlet weak var rightmenu: UIBarButtonItem!
     var spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
@@ -36,12 +37,14 @@ class ThreadListVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     var LastMsgList=[LastMsgDtls]()
     
     
+
     @IBOutlet weak var back: UIImageView!
     @IBOutlet var menudisply: UIView!
     
     @IBAction func click(_ sender: Any) {
         performSegue(withIdentifier: "squeselectuser", sender: nil)
     }
+    
     @IBOutlet weak var tableview: UITableView!
     override func viewDidLoad()
     {
@@ -56,10 +59,21 @@ class ThreadListVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
         
         back.image = UIImage.fontAwesomeIcon(name: .chevronLeft, textColor: UIColor.white, size: CGSize(width: 40, height: 45))
         
-        tableview.reloadData()
-        tableview.isHidden=false
-        hidelable.isHidden=true
-        hideview.isHidden=true
+        if(LastMsgList.count<0)
+        {
+          tableview.isHidden=true
+            hidelable.isHidden=false
+            hideview.isHidden=false
+        }
+        else{
+            tableview.reloadData()
+            tableview.isHidden=false
+            hidelable.isHidden=true
+            hideview.isHidden=true
+            
+        }
+     
+      
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadList(notification:)),name:NSNotification.Name(rawValue: "loadThread"), object: nil)
         LastMsgList.removeAll()
@@ -104,11 +118,37 @@ class ThreadListVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
-        
-        tableview.isHidden=false
-        LastMsgList.removeAll()
-        tableview.reloadData()
-        if Reachability.isConnectedToNetwork() == true{
+//        if(LastMsgList.count>0)
+//        {
+            let backgroundImage = #imageLiteral(resourceName: "gradient_bg")
+            let imageView = UIImageView(image: backgroundImage)
+            
+            self.tableview.backgroundView = imageView
+            
+            
+            tableview.isHidden=false
+            LastMsgList.removeAll()
+            tableview.reloadData()
+  
+//        }
+//        else{
+//            tableview.isHidden=true
+//            hideview.isHidden=false
+//            hidelable.isHidden=false
+//        }
+                if Reachability.isConnectedToNetwork() == true{
+                    if(!LastMsgList.isEmpty)
+                    {
+                        LastMsgList.removeAll()
+                        tableview.reloadData()
+                        
+                    }
+                    else{
+                        
+                        downloadthreadlistDetails {}
+                        
+                    }
+
             
             print("Internet connection OK")
         } else {
@@ -128,25 +168,13 @@ class ThreadListVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
         
         
         
-        if(!LastMsgList.isEmpty)
-        {
-            LastMsgList.removeAll()
-            tableview.reloadData()
-            
-        }
-        else{
-            
-            downloadthreadlistDetails {}
-            
-        }
         
         
     }
-    
-    
-    func downloadthreadlistDetails(completed: @escaping DownloadComplete){
+   
+        func downloadthreadlistDetails(completed: @escaping DownloadComplete){
         let dbMsg = DBThreadList()
-        
+    
         let request=NSFetchRequest<NSFetchRequestResult>(entityName: "Threadlist")
         
         let datesortDescriptor = NSSortDescriptor(key: "timeStamp", ascending: false)
@@ -160,7 +188,7 @@ class ThreadListVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
         
         let time=dbMsg.getupdateddateofthread()
         print(time)
-        
+      // dbMsg.deleteallvalues()
         
         var headers:[String:String] = ["userId":uid,"Time":time]
         if(time == ""){
@@ -198,8 +226,16 @@ class ThreadListVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
                             {
                                 let msg = res?[i]
                                 let isThreadPresent:Bool = dbMsg.getThread(threadId: (msg?.threadId)!)
+                                print(msg?.threadId!)
+//                                let isreceiverid:Bool=dbMsg.getreceiverId(receiverId: LastMsg.receiverId)
+//                                if(isreceiverid==false)
+//                                {
+//                                    print("not reciver")
+//                                }
+//
                                 if(isThreadPresent == true)
                                 {
+                                    
                                     
                                     dbMsg.updatethreadlist(threadlist: msg!)
                                 }
@@ -212,10 +248,44 @@ class ThreadListVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
                             }
                         }
                     }
-                    else { }
+                    else {
+                    
+                        if((res?.count)! > 0)
+                        {
+                            for i in 0...((res?.count)! - 1)
+                            {
+                                let msg = res?[i]
+                                print(msg)
+                                let isThreadPresent:Bool = dbMsg.getThread(threadId: (msg?.threadId)!)
+                                print(msg?.threadId!)
+                                //                                let isreceiverid:Bool=dbMsg.getreceiverId(receiverId: LastMsg.receiverId)
+                                //                                if(isreceiverid==false)
+                                //                                {
+                                //                                    print("not reciver")
+                                //                                }
+                                //
+                                if(isThreadPresent == true)
+                                {
+                                    
+                                    
+                                    dbMsg.updatethreadlist(threadlist: msg!)
+                                }
+                                    
+                                else{
+                                    
+                                    dbMsg.insertthreadlist(threadlist: msg!)
+                                    
+                                }
+                            }
+                        }
+                    
+                    
+                    
+                    }
                     
                     print("Success")
                     self.LastMsgList = dbMsg.retriveallrecords()
+             
                     print(self.LastMsgList)
                     
                     
@@ -304,7 +374,8 @@ class ThreadListVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "LastMessageTableCell",for:indexPath) as? LastMessageTableCell
         {
-            
+            cell.backgroundColor = .clear
+
             let LastMsg=LastMsgList[indexPath.row]
             let dateformat1 = DateFormatter()
             dateformat1.dateFormat = "yyyy-MM-dd"
@@ -316,8 +387,7 @@ class ThreadListVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
             
             
             let d1 = LastMsg.LastMsgTime.components(separatedBy: "T")[0]
-            
-            
+            print(LastMsg.UnreadCount)
             
             
             let dateinput1 = dateformat1.date(from: d1)
@@ -331,12 +401,27 @@ class ThreadListVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
             
             
             
-            
-            
+                      
             print(LastMsg.LastMsgTime)
+          
             
-            cell.updateCell(threadname: LastMsg.ThreadName, lastMsgtext: "\(LastMsg.LastMsgSender):\(LastMsg.Lastmsgtext)", lastMsgSenderImg: LastMsg.LastmsgSenderimage, LastMsgTime: dateinput)
             
+            var c1:String=""
+            if(c1 != "0")
+            {
+                c1 = LastMsg.UnreadCount
+                
+                
+            }
+            else if(c1=="0")
+            {
+                c1=" "
+                
+            }
+            
+
+           
+            cell.updateCell(threadname: LastMsg.ThreadName, lastMsgtext: "\(LastMsg.LastMsgSender):\(LastMsg.Lastmsgtext)", lastMsgSenderImg: LastMsg.LastmsgSenderimage, LastMsgTime: dateinput,Unreadcount:c1 )
             return cell
             
             
@@ -351,7 +436,26 @@ class ThreadListVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let LastMsg=LastMsgList[indexPath.row]
+        UserDefaults.standard.setValue(LastMsg.ThreadId, forKey: "ThreadID")
+        UserDefaults.standard.setValue(LastMsg.receiverId, forKey: "ParticipantList")
+        UserDefaults.standard.set(LastMsg.ThreadName, forKey: "ThreadName")
         
+        UserDefaults.standard.set(LastMsg.InitiateId, forKey: "InitiateId")
+        print(LastMsg.ThreadId)
+        
+        
+        
+        let isreceiverid:Bool=dbMsg.getreceiverId(receiverId: LastMsg.receiverId)
+        if(isreceiverid==false)
+        {
+            print("not reciver")
+        }
+        
+        
+        
+        dbMsg.updatebadgecount(threadlist:LastMsg.UnreadCount)
+      //  dbMsg.retriveallrecords()
+        LastMsg.UnreadCount="0"
         performSegue(withIdentifier: "SgueMessageCenter", sender: LastMsg)
         
     }

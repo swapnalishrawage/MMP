@@ -26,7 +26,7 @@ class FriendListModel: Mappable{
     var collapsed: Bool = true
     var isRequestSent:Bool?
     var status:String?
-
+    var isDeleted:Bool?
     required init?(map: Map) {
         mapping(map: map)
     }
@@ -47,6 +47,7 @@ class FriendListModel: Mappable{
         friendsUserId <- map["friendsUserId"]
         isRequestSent <- map["isRequestSent"]
         status <- map["status"]
+        isDeleted <- map["isDeleted"]
     }
     init() {
         
@@ -56,6 +57,6 @@ class FriendListModel: Mappable{
     func setupValue(friendName1:String, collapsed: Bool = true){
         friendName = friendName1
         self.collapsed = collapsed
-        }
-    
     }
+    
+}

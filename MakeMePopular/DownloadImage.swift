@@ -36,6 +36,25 @@ class DownloadImage{
         }
         
     }
-    
+    func userImage(imageurlString: String) -> Image? {
+        
+        var userImg:Image? = nil
+        
+        if PhotosDataManager.sharedManager.cachedImage(urlString: imageurlString) != nil
+        {
+            userImg = PhotosDataManager.sharedManager.cachedImage(urlString: imageurlString)
+        }
+            
+        else
+        {
+            let urlString = imageurlString
+            _ = PhotosDataManager.sharedManager.getNetworkImage(urlString: urlString) {image in
+                userImg = image
+            }
+            
+        }
+        return userImg
+    }
+
     
 }

@@ -19,7 +19,7 @@ class LastMsgDtls
     private var _ThreadId:String!
     private var _receiverId:String!
     private var _initiateId:String
-    
+    private var _lastsenderbyId:String!
     var LastMsgTime : String{
         get {
             return _LastMsgTime
@@ -38,6 +38,16 @@ class LastMsgDtls
         set
         {
             _receiverId = newValue
+        }
+    }
+    var lastsenderbyId : String{
+        get {
+            return _lastsenderbyId
+            
+        }
+        set
+        {
+            _lastsenderbyId = newValue
         }
     }
     
@@ -121,7 +131,7 @@ class LastMsgDtls
             _initiateId = newValue
         }
     }
-    init(LastMsgSender:String,Lastmsgtext:String,LastMsgTime:String,LastmsgSenderimage:String,ThreadName:String,ThreadId:String,reciverId:String,InitiateId:String)
+    init(LastMsgSender:String,Lastmsgtext:String,LastMsgTime:String,LastmsgSenderimage:String,ThreadName:String,ThreadId:String,reciverId:String,InitiateId:String,UnreadCount:String,LastSenderId:String)
     {
         _LastMsgSender=LastMsgSender
         _Lastmsgtext=Lastmsgtext
@@ -131,6 +141,10 @@ class LastMsgDtls
         _ThreadId=ThreadId
         _receiverId=reciverId
         _initiateId=InitiateId
+        _UnreadCount=UnreadCount
+        _lastsenderbyId=LastSenderId
+        print(LastSenderId)
+        print(UnreadCount)
     }
     
     

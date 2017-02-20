@@ -12,6 +12,7 @@ import Alamofire
 import FontAwesome_swift
 import ObjectMapper
 import CoreData
+import IQKeyboardManagerSwift
 
 class SelectMessageCenterListVC: UIViewController,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate{
     @IBOutlet weak var contatname: UILabel!
@@ -44,14 +45,14 @@ class SelectMessageCenterListVC: UIViewController,UITableViewDataSource,UITableV
     
     var spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
     var loadingView: UIView = UIView()
-    
+    var th=DBThreadList()
     
     @IBAction func sendMsgClick(_ sender: AnyObject) {
-        
+       
         
         if(textmsg.text == "")
         {
-            
+            dismissKeyboard()
             let initiateNewThread = UIAlertController(title: "Message Center", message: "Please enter message", preferredStyle: .alert)
             let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler:nil)
             
@@ -65,6 +66,7 @@ class SelectMessageCenterListVC: UIViewController,UITableViewDataSource,UITableV
         }
         else{
             
+    
             downloadSendMsgDetails {}
             
         }
@@ -82,14 +84,17 @@ class SelectMessageCenterListVC: UIViewController,UITableViewDataSource,UITableV
         back.isUserInteractionEnabled = true
         back.addGestureRecognizer(singleTap)
         back.image = UIImage.fontAwesomeIcon(name: .chevronLeft, textColor: UIColor.white, size: CGSize(width: 40, height: 45))
+               
         NotificationCenter.default.addObserver(self, selector: #selector(loadList(notification:)),name:NSNotification.Name(rawValue: "loadMessage"), object: nil)
         
         
         if Reachability.isConnectedToNetwork() == true{
             
-            print("Internet connection OK")
+            downloadthreadlmsgDetails {}
+
+            
         } else {
-            print("Internet connection FAILED")
+           
             
             let uialert = UIAlertController(title: "No Internet Connection", message: "Make sure your device is connected to the internet.", preferredStyle: .alert)
             
@@ -114,7 +119,6 @@ class SelectMessageCenterListVC: UIViewController,UITableViewDataSource,UITableV
         
         contatname.text=LastThreadMsg.ThreadName
         
-        downloadthreadlmsgDetails {}
         
         loadingView.removeFromSuperview()
         loadingView.isHidden=true
@@ -127,18 +131,11 @@ class SelectMessageCenterListVC: UIViewController,UITableViewDataSource,UITableV
         
         
         view.addGestureRecognizer(tap)
-        
-        
+       
+     
     }
     
     
-    @available(iOS 10.0, *)
-    func getContext () -> NSManagedObjectContext {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        return appDelegate.persistentContainer.viewContext
-        
-    }
     
     func didBackTapDetected() {
         
@@ -149,23 +146,42 @@ class SelectMessageCenterListVC: UIViewController,UITableViewDataSource,UITableV
     func loadList(notification: NSNotification){
         
         self.showActivityIndicator()
+       
         let t:String=UserDefaults.standard.value(forKey: "ThreadID") as! String
         let newthid=UserDefaults.standard.value(forKey: "THID") as! String
         let lstmsgSender=UserDefaults.standard.value(forKey: "SendBy") as! String
         let lstMsgTime=UserDefaults.standard.value(forKey: "Time") as! String
         let lstMsgText:String=UserDefaults.standard.value(forKey: "MSG") as! String
         let lstSenderImage:String=UserDefaults.standard.value(forKey: "SenderPic") as! String
-        
-        
+        let initiatID:String=UserDefaults.standard.value(forKey: "InitiateID") as! String
+        print(initiatID)
+        let msgID:String=UserDefaults.standard.value(forKey: "MessageID") as! String
+        let uid = UserDefaults.standard.value(forKey: "UserID") as! String
+        let parID:String=UserDefaults.standard.value(forKey: "ParticipateID") as! String
+        var s:String=""
+        if(uid==initiatID){
+            s=parID
+        }
+        else{
+            s=initiatID
+        }
         if(t==newthid){
             
-            let msgget=Message(MsgSender: lstmsgSender, msgtext:lstMsgText, MsgTime:lstMsgTime, msgSenderimage: lstSenderImage)
+            dbMsg.insertMessagelistNotice(messageId: msgID, senderId:s, timeStamp: lstMsgTime, message: lstMsgText, threadId: t, receiverId:uid, senderName: lstmsgSender, senderThumbnail: lstSenderImage)
+           // let msgget=Message(MsgSender: lstmsgSender, msgtext:lstMsgText, MsgTime:lstMsgTime, msgSenderimage: lstSenderImage)
             
             
+            //self.LastMsg.append(msgget)
+
+            let threadactive:Bool=dbMsg.getThread(threadId: newthid)
+            print(newthid)
+            if(threadactive==true)
+            {
+                self.LastMsg=dbMsg.retriveallmessage(threadid: newthid)
+            }
             
             
-            self.LastMsg.append(msgget)
-            if(LastMsg.count>0)
+                      if(LastMsg.count>0)
             {
                 MessageCenter.dataSource=self
                 MessageCenter.delegate=self
@@ -173,6 +189,7 @@ class SelectMessageCenterListVC: UIViewController,UITableViewDataSource,UITableV
             }
             self.hideActivityIndicator()
             MessageCenter.scrollToLastRow(animated: true)
+            
             
         }
         else{
@@ -183,16 +200,55 @@ class SelectMessageCenterListVC: UIViewController,UITableViewDataSource,UITableV
     }
     
     override func viewWillAppear(_ animated: Bool) {
+                let friend1=FriendListDetail()
+        let userid:String = UserDefaults.standard.value(forKey: "UserID") as! String
+        
+        
+        let receverid:String =
+            LastThreadMsg.receiverId
+        
+        var ReceverId:String!
+        
+        let initiateid:String=LastThreadMsg.InitiateId
+        
+        
+        if(userid==receverid)
+        {
+            ReceverId=initiateid
+        }
+        else{
+            ReceverId=receverid
+        }
+        
+       
+        print(ReceverId)
+        let rec:Bool=friend1.getfriends(friendId: ReceverId)
+        if(rec==false)
+        {
+            self.textmsg.isEnabled=false
+            
+            
+            self.textmsg.attributedPlaceholder=NSAttributedString(string: "      No Longer Friend  ", attributes: [NSForegroundColorAttributeName:UIColor.black])
+            
+            self.sendbutton.isUserInteractionEnabled=false
+        }
+
+        
+        
+        
+
         showActivityIndicator()
+        
     }
     //Calls this function when the tap is recognized.
     func dismissKeyboard() {
         view.endEditing(true)
-        textmsg.resignFirstResponder()
+        //textmsg.resignFirstResponder()
         
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
+      
         
     }
     
@@ -209,12 +265,16 @@ class SelectMessageCenterListVC: UIViewController,UITableViewDataSource,UITableV
         }
         
         
-        animateViewMoving(up: true, moveValue:245)
+        animateViewMoving(up: true, moveValue:240)
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        animateViewMoving(up: false, moveValue: 245)
+        view.endEditing(true)
+        textmsg.resignFirstResponder()
         
+    
+        animateViewMoving(up: false, moveValue: 240)
+        //downloadSendMsgDetails {}
         if(self.LastMsg.count<5)
         {
             self.MessageCenter.scrollToMiddle(animated: true)
@@ -223,6 +283,9 @@ class SelectMessageCenterListVC: UIViewController,UITableViewDataSource,UITableV
             self.MessageCenter.scrollToLastRow(animated: true)
         }
         
+      //  if()
+       sendMsgClick(self)
+       hideActivityIndicator()
         
     }
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
@@ -237,9 +300,14 @@ class SelectMessageCenterListVC: UIViewController,UITableViewDataSource,UITableV
         }
         
         
+ dismissKeyboard()
+        
+        
+        hideActivityIndicator()
         return true
     }
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
+      
         return true
     }
     
@@ -265,9 +333,12 @@ class SelectMessageCenterListVC: UIViewController,UITableViewDataSource,UITableV
     func animateViewMoving (up:Bool, moveValue :CGFloat){
         
         
-        
+        MessageCenter.scrollToLastRow(animated: true)
+        messageviewtop.constant=0
         let movementDuration:TimeInterval = 0.3
         let movement:CGFloat = ( up ? -moveValue : moveValue)
+        
+    
         
         
         
@@ -277,17 +348,40 @@ class SelectMessageCenterListVC: UIViewController,UITableViewDataSource,UITableV
         UITableView.setAnimationBeginsFromCurrentState(true)
         UITableView.setAnimationDuration(movementDuration)
         
-        self.MessageCenter.frame=self.MessageCenter.frame.offsetBy(dx: 0, dy: movement)
+        self.MessageCenter.frame=self.MessageCenter.frame.offsetBy(dx: 0, dy:0)
+         UITableView.commitAnimations()
         
         headertop.constant=0.0
         
-        UIView.beginAnimations( "animateView", context: nil)
-        UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(0)
-        self.headerview.frame = self.view.frame.offsetBy(dx: 0,  dy: 0)
-        messageviewtop.constant=0
-        UITableView.commitAnimations()
-        UIView.commitAnimations()
+       
+        
+        
+       
+        
+        
+        
+        
+        
+        UIButton.beginAnimations("animateView", context: nil )
+        UIButton.setAnimationBeginsFromCurrentState(true)
+        UIButton.setAnimationDuration(movementDuration )
+        self.sendbutton.frame=self.sendbutton.frame.offsetBy(dx: 0, dy: movement)
+        
+        
+        UITextField.beginAnimations("animateView", context: nil)
+        UITextField.setAnimationBeginsFromCurrentState(true)
+        UITextField.setAnimationDuration(movementDuration )
+        self.textmsg.frame = self.textmsg.frame.offsetBy(dx: 0, dy: movement)
+        
+        
+        
+          MessageCenter.scrollToLastRow(animated: true)
+        
+        UITextField.commitAnimations()
+        UIButton.commitAnimations()
+
+        
+        
         
         
     }
@@ -301,21 +395,41 @@ class SelectMessageCenterListVC: UIViewController,UITableViewDataSource,UITableV
             self.showActivityIndicator()
             
         }
-        
-        
+  
+       
         var base_url:URL? = nil
         base_url = URL(string: m )
-        let time=dbMsg.lastupdatetime()
+  
+        let userid:String = UserDefaults.standard.value(forKey: "UserID") as! String
+       
+        let receverid:String =
+            LastThreadMsg.receiverId
         
-        let param:Parameters=["threadId":LastThreadMsg.ThreadId,"searchText":"","LastMessageTime":time]
+        var ReceverId:String!
+        
+        let initiateid:String=LastThreadMsg.InitiateId
+        
+        
+        if(userid==receverid)
+        {
+            ReceverId=initiateid
+        }
+        else{
+            ReceverId=receverid
+        }
+        
+        let time=dbMsg.lastupdatetime(thid: LastThreadMsg.ThreadId,receiverid:ReceverId)
+        let param:Parameters=["threadId":LastThreadMsg.ThreadId,"searchText":"","LastMessageTime":time,"UserId":userid]
         Alamofire.request(base_url!,method: .post,parameters:param).responseJSON{ response in
             let result = response.result
             
             
+            
+            print(response)
             self.spinner.backgroundColor=UIColor.white
             self.loadingView.isHidden=true
             self.textmsg.text = ""
-            
+          
             if let dict = result.value  as?  [Dictionary<String,AnyObject>]
                 
             {
@@ -327,18 +441,25 @@ class SelectMessageCenterListVC: UIViewController,UITableViewDataSource,UITableV
                     for i in 0...((res?.count)! - 1)
                     {
                         let msg = res?[i]
-                        self.dbMsg.insertMessagelist(messagelist: msg!)
-                        
+                        let msgid:Bool=self.dbMsg.getmessage(messageid: (msg?.messageId)!)
+                        if(msgid==false)
+                        {
+                               self.dbMsg.insertMessagelist(messagelist: msg!)
+                        }
+                     
+                       
+
                         
                     }
+                    
                 }
-                
-                self.LastMsg = self.dbMsg.retriveallmessage()
-                self.spinner.backgroundColor=UIColor.white
                 
             }
             
+            self.LastMsg = self.dbMsg.retriveallmessage(threadid: self.LastThreadMsg.ThreadId)
             
+            self.spinner.backgroundColor=UIColor.white
+
             self.MessageCenter.reloadData()
             
             
@@ -383,6 +504,10 @@ class SelectMessageCenterListVC: UIViewController,UITableViewDataSource,UITableV
     func downloadSendMsgDetails(completed: DownloadComplete){
         
         
+        
+        
+        let friend1=FriendListDetail()
+        
         self.showActivityIndicator()
         
         let m = Chat_URL + "sendMessage"
@@ -395,25 +520,27 @@ class SelectMessageCenterListVC: UIViewController,UITableViewDataSource,UITableV
         
         
         let userid:String = UserDefaults.standard.value(forKey: "UserID") as! String
-       
-        let receverid:String = _lastthreadmsg.receiverId
+        let receverid:String =
+            LastThreadMsg.receiverId
+        
         var ReceverId:String!
         
-        let initiateid:String = _lastthreadmsg.InitiateId
+        let initiateid:String=LastThreadMsg.InitiateId
         
-        if(userid == receverid)
+        
+        if(userid==receverid)
         {
-            ReceverId = initiateid
+            ReceverId=initiateid
         }
         else{
-            ReceverId = receverid
+            ReceverId=receverid
         }
         
         
         let msg:String=textmsg.text! as String
         textmsg.text=""
         let date = Date()
-        //let dt=DateUtil()
+        let dt=DateUtil()
         let dateformatter = DateFormatter()
         dateformatter.dateFormat = "MM/dd/yyyy HH:mm:ss"
         let d:String=dateformatter.string(from: date)
@@ -431,10 +558,19 @@ class SelectMessageCenterListVC: UIViewController,UITableViewDataSource,UITableV
             
             var pic:String=""
             print(response)
+         //   let result = response.result
+            
+            
+            
+            let fnm:String=UserDefaults.standard.value(forKey: "UserFName") as! String
+            let Lnm:String=UserDefaults.standard.value(forKey: "UserLName") as! String
+            
+            
+            print(fnm+Lnm)
             self.hideActivityIndicator()
-            if((UserDefaults.standard.value(forKey: "Senderpic") as! String) != "")
+            if((UserDefaults.standard.value(forKey: "ProfilePic") as! String) != "")
             {
-                pic=UserDefaults.standard.value(forKey: "Senderpic") as! String
+                pic=UserDefaults.standard.value(forKey: "ProfilePic") as! String
             }
             else{
                 pic=""
@@ -451,9 +587,79 @@ class SelectMessageCenterListVC: UIViewController,UITableViewDataSource,UITableV
             }
             
             print(d)
-            let msgget=Message(MsgSender:sender, msgtext: msg, MsgTime:d, msgSenderimage: pic)
+                 
+            let datelocal=dt.getDate(date: d, FLAG: "D", t: d)
+            print(datelocal)
+            let d1=d.components(separatedBy: ":")[0]+":"+d.components(separatedBy: ":")[1]
+            print(d1)
+            let d2=datelocal.components(separatedBy: " ")[0]//+":"+datelocal.components(separatedBy: ":")[1]
+            var m2:String=""
+            var t1:String=""
+            var msgget:Message!
+            if((d2.components(separatedBy: ":")[0])=="" )
+            {
+                  t1=d
+           }
+            else
+            {
+                m2=d2.components(separatedBy: ":")[0]
+                if(m2=="12")
+                {
+                    t1=d
+                }
+                else
+                {
+                t1=d2+" "+"AM"
+                }
+                print(t1)
+               
+            }
+            print(m2)
+            print(d2)
+           
+        msgget=Message(MsgSender:fnm+Lnm, msgtext: msg, MsgTime:t1, msgSenderimage: pic)
             
-            self.LastMsg.append(msgget)
+            if(response.response?.statusCode==410)
+            {
+                self.textmsg.isEnabled=false
+                self.textmsg.attributedPlaceholder=NSAttributedString(string: "      No Longer Friend  ", attributes: [NSForegroundColorAttributeName:UIColor.black])
+                
+                self.sendbutton.isUserInteractionEnabled=false
+                
+               
+                if(userid==receverid)
+                {
+                    ReceverId=initiateid
+                }
+                else{
+                    ReceverId=receverid
+                }
+                let isfriend:Bool=friend1.getfriends(friendId:ReceverId)
+                if(isfriend == false)
+                {
+                    print("delet here")
+                    print(self.LastThreadMsg.ThreadName)
+                    
+                    
+                    
+                    //update....
+                    
+                }
+                    
+                else{
+                    
+                    print("available")
+                    print("delet here")
+                    friend1.deletsinglefriend(frienduserid: ReceverId)
+                   
+                    
+                }
+                
+                
+            }
+            else{
+                self.LastMsg.append(msgget)
+            }
             
             self.MessageCenter.reloadData()
             self.textmsg.text=""
@@ -467,13 +673,9 @@ class SelectMessageCenterListVC: UIViewController,UITableViewDataSource,UITableV
             }
             
             
-        }
-        
-        completed()
-        
-        
     }
-    
+        completed()
+    }
     
     
     @IBOutlet weak var backbtn: UIBarButtonItem!
@@ -497,8 +699,7 @@ class SelectMessageCenterListVC: UIViewController,UITableViewDataSource,UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCenterCell",for:indexPath) as? MessageCenterCell
         {
-            
-            let LastMsgtest=LastMsg[indexPath.row]
+                         let LastMsgtest=LastMsg[indexPath.row]
             let dateformat1 = DateFormatter()
             dateformat1.dateFormat = "yyyy-MM-dd"
             let dateobj = DateUtil()
@@ -540,7 +741,7 @@ class SelectMessageCenterListVC: UIViewController,UITableViewDataSource,UITableV
             
             cell.updateCell(MsgSender: LastMsgtest.MsgSender, msgtext: LastMsgtest.msgtext, MsgTime: dtinput, msgSenderimage: LastMsgtest.msgSenderimage)
             
-            
+            hideActivityIndicator()
             
             
             
@@ -549,7 +750,8 @@ class SelectMessageCenterListVC: UIViewController,UITableViewDataSource,UITableV
             return cell
             
         }
-        self.spinner.backgroundColor=UIColor.white
+        hideActivityIndicator()
+        
         return UITableViewCell()
         
     }
@@ -583,6 +785,8 @@ class SelectMessageCenterListVC: UIViewController,UITableViewDataSource,UITableV
     }
     
     func hideActivityIndicator() {
+        self.spinner.stopAnimating()
+        self.loadingView.removeFromSuperview()
         
         DispatchQueue.main.async {
             self.spinner.stopAnimating()
@@ -630,5 +834,6 @@ extension UITableView {
         }
         
     }
+    
     
 }

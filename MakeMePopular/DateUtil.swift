@@ -128,24 +128,39 @@ class DateUtil{
                 print(c1)
                 time = t.components(separatedBy: " ")[1].components(separatedBy: ":")
                 print(time)
-                
+                if(c1==2)
+                {
+                    if(t.components(separatedBy: " ")[1] != "")                    {
+                    time = t.components(separatedBy: " ")[1].components(separatedBy: ":")
+                        
+                    }
+                }
                 if(t.components(separatedBy: " ")[c1-1] != "")
                 {
                     E1=t.components(separatedBy: " ")[c1-1]
                 }
                 
             }
-            
+             print(time)
             let p=time[0]
             var tp:String = ""
             print(tp)
             let t=Int(p)
-            let t1:Int=t! as Int
+            var t1:Int!
+         
+            
+            if((t! as Int) != 0 )
+            {
+            t1=(t! as Int)
+            }
             print(t1)
             if (t1==12)
             {
                 tp = "PM";
-                outtime = String(describing: t1) + ":" + time[1] + " " + E1;
+                print(t1)
+                let tm=t1! as Int
+                print(tm)
+                outtime = String(describing: t1! as Int) + ":" + time[1] + " " + tp;
             }
             else if (t1 > 12) {
                 let t2:Int = t1 - 12;
@@ -155,15 +170,24 @@ class DateUtil{
                 }
                 
                 
-                //E1="PM"
+                E1="PM"
                 outtime = String(t2) + ":" + time[1] + " " + E1;
             } else {
                 if(E1=="")
                 {
                     E1 = "AM";
+                    
                 }
-                //E1 = "AM";
+               // E1 = "AM";
+                
+                
                 outtime = time[0] + ":" + time[1] + " " + E1;
+//                if(outtime.contains(" "))
+//                {
+//                  var tm1 =  outtime.components(separatedBy: " ")[0]
+//                    outtime=tm1
+//                }
+                
             }
         }
         print(outtime)
@@ -172,8 +196,7 @@ class DateUtil{
             //Current Date Message
             if (outdate == currentdate && outdate != "") {
                 datetimevalue = outtime//"Today"
-                
-                
+                               
             } else {
                 let cal=NSCalendar.current
                 let oneDayAgo = cal.date(byAdding: .day, value: -1, to: Date())

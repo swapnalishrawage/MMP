@@ -47,6 +47,7 @@ class ThreadlistModel: Mappable {
         threadCustomName <- map["threadCustomName"]
         participantList<-map["participantList"]
         print(participantList!)
+        print(badgeCount!)
         
     }
     

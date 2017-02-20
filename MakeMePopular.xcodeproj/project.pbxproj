@@ -18,7 +18,6 @@
 		0372D7141E24D15400B165B4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372D7131E24D15400B165B4 /* AppDelegate.swift */; };
 		0372D7161E24D15400B165B4 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372D7151E24D15400B165B4 /* MainVC.swift */; };
 		0372D7191E24D15400B165B4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0372D7171E24D15400B165B4 /* Main.storyboard */; };
-		0372D71C1E24D15400B165B4 /* MakeMePopular.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0372D71A1E24D15400B165B4 /* MakeMePopular.xcdatamodeld */; };
 		0372D71E1E24D15400B165B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0372D71D1E24D15400B165B4 /* Assets.xcassets */; };
 		0372D7211E24D15400B165B4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0372D71F1E24D15400B165B4 /* LaunchScreen.storyboard */; };
 		0372D7291E24D22500B165B4 /* RegistrationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0372D7281E24D22500B165B4 /* RegistrationVC.swift */; };
@@ -40,6 +39,7 @@
 		041ED3BE1E2E4C8200DE97EF /* FriendlistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041ED3BD1E2E4C8200DE97EF /* FriendlistCell.swift */; };
 		041ED3C01E2E4DCF00DE97EF /* FriendListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041ED3BF1E2E4DCF00DE97EF /* FriendListModel.swift */; };
 		045F65B91E3779BF0031E631 /* NotificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F65B81E3779BF0031E631 /* NotificationVC.swift */; };
+		04653D601E55E769004113C6 /* MakeMePopular.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04653D5E1E55E769004113C6 /* MakeMePopular.xcdatamodeld */; };
 		04788D601E4081CD003A0FC9 /* ImageToText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04788D5F1E4081CD003A0FC9 /* ImageToText.swift */; };
 		04788D621E408232003A0FC9 /* PhotosDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04788D611E408232003A0FC9 /* PhotosDataManager.swift */; };
 		04788D641E4082D7003A0FC9 /* DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04788D631E4082D7003A0FC9 /* DownloadImage.swift */; };
@@ -61,6 +61,9 @@
 		04A466711E44987700D693B3 /* NotificationDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A466701E44987700D693B3 /* NotificationDetailVC.swift */; };
 		04A466731E44BBD200D693B3 /* AboutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A466721E44BBD200D693B3 /* AboutVC.swift */; };
 		04C15EEB1E4332EF00C4070A /* SetLocationResModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C15EEA1E4332EF00C4070A /* SetLocationResModel.swift */; };
+		04C5D3FE1E5AEAC700AF9494 /* NearByFriendMainResModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C5D3FD1E5AEAC700AF9494 /* NearByFriendMainResModel.swift */; };
+		04C7505C1E559AF7001663A5 /* FriendListDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7505B1E559AF7001663A5 /* FriendListDetail.swift */; };
+		04C7505E1E559BE0001663A5 /* ContactList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7505D1E559BE0001663A5 /* ContactList.swift */; };
 		04C873D01E31E01400B667A9 /* NearMeFriendVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C873CF1E31E01400B667A9 /* NearMeFriendVC.swift */; };
 		04C873D21E31F4D700B667A9 /* EmergencyContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C873D11E31F4D700B667A9 /* EmergencyContactCell.swift */; };
 		04CE15471E370EA5008F6A47 /* TrackDialogueVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CE15461E370EA5008F6A47 /* TrackDialogueVC.swift */; };
@@ -91,7 +94,6 @@
 		0372D7131E24D15400B165B4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0372D7151E24D15400B165B4 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		0372D7181E24D15400B165B4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		0372D71B1E24D15400B165B4 /* MakeMePopular.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MakeMePopular.xcdatamodel; sourceTree = "<group>"; };
 		0372D71D1E24D15400B165B4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0372D7201E24D15400B165B4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0372D7221E24D15400B165B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 		041ED3BD1E2E4C8200DE97EF /* FriendlistCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendlistCell.swift; sourceTree = "<group>"; };
 		041ED3BF1E2E4DCF00DE97EF /* FriendListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendListModel.swift; sourceTree = "<group>"; };
 		045F65B81E3779BF0031E631 /* NotificationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationVC.swift; sourceTree = "<group>"; };
+		04653D5F1E55E769004113C6 /* MakeMePopular.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MakeMePopular.xcdatamodel; sourceTree = "<group>"; };
 		04788D5F1E4081CD003A0FC9 /* ImageToText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageToText.swift; sourceTree = "<group>"; };
 		04788D611E408232003A0FC9 /* PhotosDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosDataManager.swift; sourceTree = "<group>"; };
 		04788D631E4082D7003A0FC9 /* DownloadImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadImage.swift; sourceTree = "<group>"; };
@@ -136,6 +139,9 @@
 		04A466701E44987700D693B3 /* NotificationDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationDetailVC.swift; sourceTree = "<group>"; };
 		04A466721E44BBD200D693B3 /* AboutVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutVC.swift; sourceTree = "<group>"; };
 		04C15EEA1E4332EF00C4070A /* SetLocationResModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetLocationResModel.swift; sourceTree = "<group>"; };
+		04C5D3FD1E5AEAC700AF9494 /* NearByFriendMainResModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearByFriendMainResModel.swift; sourceTree = "<group>"; };
+		04C7505B1E559AF7001663A5 /* FriendListDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendListDetail.swift; sourceTree = "<group>"; };
+		04C7505D1E559BE0001663A5 /* ContactList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactList.swift; sourceTree = "<group>"; };
 		04C873CF1E31E01400B667A9 /* NearMeFriendVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearMeFriendVC.swift; sourceTree = "<group>"; };
 		04C873D11E31F4D700B667A9 /* EmergencyContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmergencyContactCell.swift; sourceTree = "<group>"; };
 		04CE15461E370EA5008F6A47 /* TrackDialogueVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackDialogueVC.swift; sourceTree = "<group>"; };
@@ -187,6 +193,8 @@
 				048A13D31E5331B900D011A3 /* ThreadlistModel.swift */,
 				048A13DA1E53336900D011A3 /* Message.swift */,
 				048A13DC1E53339800D011A3 /* MessageModel.swift */,
+				04C7505D1E559BE0001663A5 /* ContactList.swift */,
+				04C5D3FD1E5AEAC700AF9494 /* NearByFriendMainResModel.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -269,6 +277,7 @@
 			children = (
 				03C1E3181E2754450071A174 /* GoogleService-Info.plist */,
 				03C1E3171E27473A0071A174 /* MakeMePopular.entitlements */,
+				04653D5E1E55E769004113C6 /* MakeMePopular.xcdatamodeld */,
 				03C1E31A1E2765FA0071A174 /* Map */,
 				037156DD1E266C1300472E80 /* API */,
 				037156D81E26626F00472E80 /* Controller */,
@@ -284,13 +293,12 @@
 				04D02D911E388F2900CB19A0 /* Reachability.swift */,
 				04788D611E408232003A0FC9 /* PhotosDataManager.swift */,
 				04788D631E4082D7003A0FC9 /* DownloadImage.swift */,
+				048A13CD1E532BD300D011A3 /* DateUtil.swift */,
 				0372D7171E24D15400B165B4 /* Main.storyboard */,
 				0372D71D1E24D15400B165B4 /* Assets.xcassets */,
 				0372D71F1E24D15400B165B4 /* LaunchScreen.storyboard */,
 				0372D7221E24D15400B165B4 /* Info.plist */,
-				0372D71A1E24D15400B165B4 /* MakeMePopular.xcdatamodeld */,
 				04D316F81E4B01EE006417C0 /* MakeMePopular-Bridging-Header.h */,
-				048A13CD1E532BD300D011A3 /* DateUtil.swift */,
 			);
 			path = MakeMePopular;
 			sourceTree = "<group>";
@@ -308,6 +316,7 @@
 			children = (
 				048A13D61E53325900D011A3 /* DBThreadList.swift */,
 				048A13DE1E5333EC00D011A3 /* DBMessageList.swift */,
+				04C7505B1E559AF7001663A5 /* FriendListDetail.swift */,
 			);
 			name = DataBaseMethods;
 			sourceTree = "<group>";
@@ -467,6 +476,7 @@
 				04D316FA1E4B374E006417C0 /* CustomSlider.swift in Sources */,
 				048A13CC1E5329E800D011A3 /* ThreadListVC.swift in Sources */,
 				037156D11E26303E00472E80 /* InterestVC.swift in Sources */,
+				04C7505E1E559BE0001663A5 /* ContactList.swift in Sources */,
 				04CEE0BF1E41DB42005B64BC /* NearMePlaces.swift in Sources */,
 				041ED3BE1E2E4C8200DE97EF /* FriendlistCell.swift in Sources */,
 				03C1E31E1E276C0E0071A174 /* DashboardVC.swift in Sources */,
@@ -476,7 +486,6 @@
 				03901EC01E24E52D00D516C9 /* Utils.swift in Sources */,
 				048A13D21E53317F00D011A3 /* LastMsgDtls.swift in Sources */,
 				04A4666A1E444F8400D693B3 /* NotifiationListVC.swift in Sources */,
-				0372D71C1E24D15400B165B4 /* MakeMePopular.xcdatamodeld in Sources */,
 				048A13DF1E5333EC00D011A3 /* DBMessageList.swift in Sources */,
 				04DB85491E35C85000D1B0DF /* TrackFriendModel.swift in Sources */,
 				037156DF1E266C2700472E80 /* SetLocationAPI.swift in Sources */,
@@ -484,6 +493,7 @@
 				03C84ABB1E290EC900497B5B /* AddFriendVC.swift in Sources */,
 				037156DA1E2663A800472E80 /* UserDetail.swift in Sources */,
 				048A13D01E532FB300D011A3 /* LastMessageTableCell.swift in Sources */,
+				04653D601E55E769004113C6 /* MakeMePopular.xcdatamodeld in Sources */,
 				041ED3B61E2E29FC00DE97EF /* CollapsibleTableViewHeader.swift in Sources */,
 				04D02D921E388F2900CB19A0 /* Reachability.swift in Sources */,
 				04C873D01E31E01400B667A9 /* NearMeFriendVC.swift in Sources */,
@@ -510,6 +520,7 @@
 				037156D51E263E2E00472E80 /* InterestModel.swift in Sources */,
 				04A466711E44987700D693B3 /* NotificationDetailVC.swift in Sources */,
 				04D06C881E309A1500CAB7E2 /* InterestListModel.swift in Sources */,
+				04C5D3FE1E5AEAC700AF9494 /* NearByFriendMainResModel.swift in Sources */,
 				03C84ABD1E290FF200497B5B /* AddFriendCell.swift in Sources */,
 				03C84AB91E28D1C200497B5B /* EmergencyCell.swift in Sources */,
 				0372D7161E24D15400B165B4 /* MainVC.swift in Sources */,
@@ -520,6 +531,7 @@
 				041ED3C01E2E4DCF00DE97EF /* FriendListModel.swift in Sources */,
 				04A4666E1E44542600D693B3 /* NotificationModel.swift in Sources */,
 				04CEE0C11E421781005B64BC /* NearByPlacesModel.swift in Sources */,
+				04C7505C1E559AF7001663A5 /* FriendListDetail.swift in Sources */,
 				048A13D91E53332400D011A3 /* SelectMessageCenterListVC.swift in Sources */,
 				048A13DD1E53339800D011A3 /* MessageModel.swift in Sources */,
 				04788D601E4081CD003A0FC9 /* ImageToText.swift in Sources */,
@@ -638,7 +650,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -704,13 +716,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		0372D71A1E24D15400B165B4 /* MakeMePopular.xcdatamodeld */ = {
+		04653D5E1E55E769004113C6 /* MakeMePopular.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				0372D71B1E24D15400B165B4 /* MakeMePopular.xcdatamodel */,
+				04653D5F1E55E769004113C6 /* MakeMePopular.xcdatamodel */,
 			);
-			currentVersion = 0372D71B1E24D15400B165B4 /* MakeMePopular.xcdatamodel */;
-			path = MakeMePopular.xcdatamodeld;
+			currentVersion = 04653D5F1E55E769004113C6 /* MakeMePopular.xcdatamodel */;
+			name = MakeMePopular.xcdatamodeld;
+			path = ../../../../MakeMePopular.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

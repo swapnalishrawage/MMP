@@ -81,7 +81,21 @@ class InterestVC: UIViewController , UICollectionViewDelegate,UICollectionViewDa
             back.isUserInteractionEnabled = true
             back.addGestureRecognizer(singleTap2)
             
-            getUserInterest {}
+            if(Reachability.isConnectedToNetwork()){
+                self.showActivityIndicator()
+                getUserInterest {}
+            }
+            else {
+                
+                let credentialerror = UIAlertController(title: "No Internet Connection", message: "Make sure your device is connected to the internet.", preferredStyle: .alert)
+                
+                let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler:nil)
+                
+                credentialerror.addAction(cancelAction)
+                self.present(credentialerror, animated: true, completion: {  })
+                
+            }
+
             
         }
         

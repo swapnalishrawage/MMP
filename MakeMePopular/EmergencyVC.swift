@@ -42,6 +42,8 @@ class EmergencyVC: UIViewController, UICollectionViewDelegate,UICollectionViewDa
         self.noData.isHidden = true
         self.emergencyContactTable.isHidden = false
         
+        setMessage()
+        setUpView()
         
         if(Reachability.isConnectedToNetwork())
         {
@@ -60,8 +62,7 @@ class EmergencyVC: UIViewController, UICollectionViewDelegate,UICollectionViewDa
             
         }
         
-        setMessage()
-        setUpView()
+       
        
         
     }
@@ -74,10 +75,15 @@ class EmergencyVC: UIViewController, UICollectionViewDelegate,UICollectionViewDa
     }
     
     func setMessage(){
+        if(UserDefaults.standard.value(forKey: "UserAdrs") != nil && UserDefaults.standard.value(forKey: "UserCity") != nil){
         let adrs = UserDefaults.standard.value(forKey: "UserAdrs") as! String
         let city = UserDefaults.standard.value(forKey: "UserCity") as! String
+            msg = "Medical Emergency, I need help at: "+adrs+" , "+city
+        }
+        else{
+            msg = "Medical Emergency, I need help"
+        }
         
-        msg = "Medical Emergency, I need help at: "+adrs+" , "+city
       
         messagetext.text = msg
     }
@@ -331,8 +337,14 @@ class EmergencyVC: UIViewController, UICollectionViewDelegate,UICollectionViewDa
             selected = false
             bgcolor = "00BCD4"
         }else{
-            let adrs = UserDefaults.standard.value(forKey: "UserAdrs") as! String
-            let city = UserDefaults.standard.value(forKey: "UserCity") as! String
+            var adrs = ""
+            if( UserDefaults.standard.value(forKey: "UserAdrs") != nil){
+                adrs = UserDefaults.standard.value(forKey: "UserAdrs") as! String
+            }
+            var city = ""
+            if(UserDefaults.standard.value(forKey: "UserCity") != nil){
+                city = UserDefaults.standard.value(forKey: "UserCity") as! String
+            }
 
             
             selected = true
