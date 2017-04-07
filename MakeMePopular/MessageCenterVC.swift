@@ -14,12 +14,27 @@ import CoreData
 import ObjectMapper
 
 @available(iOS 10.0, *)
-class MessageCenterVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate{
-    
+class MessageCenterVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource{
+    var uid1=[Int]()
+//           private var   _threaddetail:ThreadDetailModel!
+//    var  ThreadDetail : ThreadDetailModel{
+//        get {
+//            return _threaddetail
+//            
+//        }
+//        set
+//        {
+//            _threaddetail = newValue
+//        }
+//    }
+    @IBOutlet weak var tbfrd: UILabel!
     var context:NSManagedObjectContext!
     @IBOutlet weak var textmsg: UITextField!
     
+    @IBOutlet weak var tablefrd: UITableView!
+    @IBOutlet weak var doneimage: UIImageView!
     
+    @IBOutlet weak var attachview: UIView!
     
     @IBOutlet weak var hidelabel: UILabel!
     
@@ -41,7 +56,7 @@ class MessageCenterVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSo
     var contacts:[String] = []
     var clist=[ContactList]()
     var userid:String!
-    
+    var useridlist:[String]=[]
     @IBOutlet weak var sendbtn: UIButton!
     @IBAction func sendclick(_ sender: Any) {
         
@@ -60,23 +75,52 @@ class MessageCenterVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSo
             self.present(initiateNewThread, animated: true, completion: {  })
             
         }
-        else if(selectfriend.titleLabel?.text == "Select Friend")
-        {
-            dismissKeyboard()
-            
-            let initiateNewThread1 = UIAlertController(title: "Error", message: "Please select at least one user", preferredStyle: .alert)
-            let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler:nil)
-            
-            
-            
-            initiateNewThread1.addAction(cancelAction)
-            
-            
-            self.present(initiateNewThread1, animated: true, completion: {  })
-            
-        }
+//        else if(selectfriend.titleLabel?.text == "Select Friend")
+//        {
+//            dismissKeyboard()
+//            
+//            let initiateNewThread1 = UIAlertController(title: "Error", message: "Please select at least one user", preferredStyle: .alert)
+//            let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler:nil)
+//            
+//            
+//            
+//            initiateNewThread1.addAction(cancelAction)
+//            
+//            
+//            self.present(initiateNewThread1, animated: true, completion: {  })
+//            
+//        }
         else{
-            
+            var c1=0
+            var name=""
+            var u=""
+            var t1="\",\""
+            print(t1)
+            for n in 0...uid1.count-1{
+                selectfriend.titleLabel?.text=""
+                
+                
+                selectfriend.setTitle(name+","+contacts[uid1[n]], for: UIControlState())
+                
+                name=contacts[uid1[n]]
+                if(uid1.count>1){
+                    
+                    //userid.append(clist[uid1[n]].frienduserId)
+                    userid=u+","+clist[uid1[n]].frienduserId
+                    
+                    
+                    
+                    //userid.append(clist[uid1[n]].frienduserId)
+                    
+                    
+                    
+                }
+                
+                u=clist[uid1[n]].frienduserId
+                
+            }
+            print(userid)
+
             downloadInitialThread {}
         }
         
@@ -86,20 +130,74 @@ class MessageCenterVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSo
     @IBAction func selectfriendclick(_ sender: Any) {
         print("selectfriend")
         showActivityIndicator()
-        selectfriendpicker.isHidden=false
-        hideActivityIndicator()
-        hidelabel.isHidden=true
+        
+        if(clist.count < 0)
+        {
+            
+         tablefrd.isHidden=true
+            //selectfriendpicker.isHidden=true
+            hideActivityIndicator()
+            hidelabel.text="No friends available in your friendlist"
+            hidelabel.isHidden=false
+        
+        }
+        else if(clist.count>0){
+            
+            //selectfriendpicker.isHidden=false
+            tablefrd.isHidden=false
+            hideActivityIndicator()
+            hidelabel.isHidden=true
+            tablefrd.dataSource=self
+            tablefrd.delegate=self
+            tablefrd.reloadData()
+
+        }
+        else{
+          //  selectfriendpicker.isHidden=true
+            tablefrd.isHidden=true
+            hideActivityIndicator()
+            hidelabel.text="No result found"
+            hidelabel.isHidden=false
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let singleTap = UITapGestureRecognizer(target: self, action: #selector(MessageCenterVC.didBackTapDetected))
+        
+        
+        UserDefaults.standard.set("2", forKey: "Test")
+      //  if(UserDefaults.standard.value(forKey: "Test") as! String=="2")
+        
+    tablefrd.isHidden=true
+        hidelabel.isHidden=false
+//               tablefrd.allowsMultipleSelectionDuringEditing = true
+//        tablefrd.setEditing(true, animated: true)
+        
+        
+        
+//        if(UserDefaults.standard.value(forKey: "t") as! String=="1"){
+//            
+//            textmsg.isHidden=true
+//            sendbtn.isHidden=true
+//        }
+
+             let singleTap = UITapGestureRecognizer(target: self, action: #selector(MessageCenterVC.didBackTapDetected))
         singleTap.numberOfTapsRequired = 1 // you can change this value
         back.isUserInteractionEnabled = true
         back.addGestureRecognizer(singleTap)
         
-        back.image = UIImage.fontAwesomeIcon(name: .chevronLeft, textColor: UIColor.white, size: CGSize(width: 40, height: 45))
         
+        
+//        let singleTap1 = UITapGestureRecognizer(target: self, action: #selector(MessageCenterVC.doneclick))
+//        singleTap1.numberOfTapsRequired = 1 // you can change this value
+//        doneimage.isUserInteractionEnabled = true
+//        doneimage.addGestureRecognizer(singleTap1)
+//        
+        
+        
+        //attachview.isHidden=true
+        back.image = UIImage.fontAwesomeIcon(name: .chevronLeft, textColor: UIColor.white, size: CGSize(width: 40, height: 45))
+       // doneimage.image=UIImage.fontAwesomeIcon(name: .check, textColor: UIColor.white, size: CGSize(width: 40, height: 45))
         self.showActivityIndicator()
         
         self.textmsg.delegate=self
@@ -118,6 +216,104 @@ class MessageCenterVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSo
         
         view.addGestureRecognizer(tap)
         
+        
+        tablefrd.allowsMultipleSelectionDuringEditing = true
+        tablefrd.setEditing(true, animated: true)
+        
+
+        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        tablefrd.allowsMultipleSelectionDuringEditing = true
+        tablefrd.setEditing(true, animated: true)
+        
+        self.tablefrd.delegate=self
+        self.tablefrd.dataSource=self
+        
+        
+        hidelabel.isHidden=false
+    }
+    func doneclick() {
+        
+        var c1=0
+        var name=""
+       var u=""
+        var t1="\",\""
+        print(t1)
+        for n in 0...uid1.count-1{
+            selectfriend.titleLabel?.text=""
+      
+          
+            selectfriend.setTitle(name+","+contacts[uid1[n]], for: UIControlState())
+            
+            name=contacts[uid1[n]]
+            if(uid1.count>1){
+                
+                //userid.append(clist[uid1[n]].frienduserId)
+                userid=u+","+clist[uid1[n]].frienduserId
+                
+                
+                
+                //userid.append(clist[uid1[n]].frienduserId)
+               
+                
+            
+            }
+            
+            u=clist[uid1[n]].frienduserId
+         
+        }
+        print(userid)
+        
+//        if(UserDefaults.standard.value(forKey: "t") as! String=="1"){
+        //addthread()
+//        }
+        
+        
+        
+//        if(UserDefaults.standard.value(forKey: "t") as! String=="1"){
+//            
+//            
+//            let m = Chat_URL + "addThreadMember"
+//            var base_url:URL? = nil
+//            base_url = URL(string: m )
+//            
+//            let grpname = UIAlertController(title: "Add Friend", message: "Are you sure you want to Add", preferredStyle: .alert)
+//            
+//            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:nil)
+//            let okAction = UIAlertAction(title: "Remove", style: .default, handler:{
+//            
+//            action in
+//                
+//                
+////                Alamofire.request(base_url!,method:.put,parameters:param,encoding: JSONEncoding.default).responseJSON{ response in
+////                    let result = response.result
+////                    
+////                    
+////                    if(response.response?.statusCode==200)
+////                    {
+////                        print(response)
+////                        
+////                        self.tbgrpmember.reloadData()
+////                        
+////                    }
+////                    
+////                }
+////                
+//
+//                print("ADD")
+//            })
+//            
+//            grpname.addAction(cancelAction)
+//            grpname.addAction(okAction)
+//            self.present(grpname, animated: true, completion: {  })
+//
+//            
+//        }
+
+      
+      
+      
     }
     func didBackTapDetected() {
         
@@ -198,15 +394,15 @@ class MessageCenterVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSo
         let friend1=FriendListDetail()
         
         
-        //friend1.deleteallvalues()
+     
         
         let methodName = "getFriendList"
         Current_Url = "\(BASE_URL)\(methodName)"
-        print(Current_Url)
+  
         
         let current_url = URL(string: Current_Url)!
         let time=friend1.getupdateddateoffriend()
-        print(time)
+   
         let userId = UserDefaults.standard.value(forKey: "UserID") as! String
         
         var parameters1 = ["userId":userId,"searchText":"","lastUpdatedDate":time] as [String : Any]
@@ -223,24 +419,17 @@ class MessageCenterVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSo
         
         Alamofire.request(current_url, method: .post, parameters: parameters1, encoding: JSONEncoding.default, headers: headers1).responseJSON{ response in
             
-            print(response)
+          
             let result = response.result
-            print("\(result.value)")
-            
+           
+            if(response.response?.statusCode==200)
+            {
             if let dict = result.value  as?  [Dictionary<String,AnyObject>]
                 
             {
                 let res = Mapper<FriendListModel>().mapArray(JSONObject: dict)
-                print(res!)
-                let request=NSFetchRequest<NSFetchRequestResult>(entityName: "FriendList")
+          
                 
-                
-                do{
-                 
-                        
-                        let searchResults=try self.getContext().fetch(request)
-                        print ("num of results = \(searchResults.count)")
-                        
                         if((res?.count)! > 0)
                         {
                             for i in 0...((res?.count)! - 1)
@@ -250,13 +439,13 @@ class MessageCenterVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSo
                                 if(isfriend == true)
                                 {
                                     
-                                    print("available")
+                                    
                                     //update....
                                     
                                 }
                                     
                                 else{
-                                    print("inserting here")
+                                 
                                     friend1.insertfriendlist(friendlist: msg!)
                                     
                                 }
@@ -265,50 +454,47 @@ class MessageCenterVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSo
                  
                     else { }
                     
-                    print("Success")
+                    self.uid1.removeAll()
                     self.clist.removeAll()
                     self.clist=friend1.retrivefriendlist()
-                    print(self.clist.count)
+                  
                     
                     print(self.clist)
                     self.contacts.removeAll()
+                    if(!self.clist.isEmpty)
+                    {
                     for i in 0...(self.clist.count-1){
                         
-                        print(self.clist[i].userId)
-                        print(self.clist[i].FriendId)
-                        print(self.clist[i].username)
                         
                         self.clist.sort(){$0.username < $1.username}
                        let m = self.clist[i].username
-                        print(m)
+                       
                         self.contacts.append(m)
-                        print(self.contacts[i])
+                       
                     }
-                    
-                    print(self.clist.count)
-                    
-                    print(self.contacts.count)
-                    
-                }
-                    
-                catch
-                {
-                    print("no result")
-                }
-                
+                    }
+                    else{
+                        
+                        self.tablefrd.isHidden=true
+                    self.selectfriendpicker.isHidden=true
+                        self.hidelabel.isHidden=false
+                    }
+              
             }
             
-            
+            }
             
             if(self.clist.count > 0){
                 self.selectfriendpicker.dataSource=self
                 self.selectfriendpicker.delegate=self
+                
                 self.hideActivityIndicator()
             }
                 
             else{
                 self.hidelabel.isHidden=false
                 self.selectfriendpicker.isHidden=true
+                self.tablefrd.isHidden=true
                 
             }
             
@@ -323,6 +509,37 @@ class MessageCenterVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSo
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.persistentContainer.viewContext
     }
+   func addthread()
+   {
+     let m = Chat_URL + "addThreadMember"
+    let m0 :Dictionary<String,String> = ["userId":userid]
+    //print(userid)
+    
+    let id:[String]=[userid]
+    let thid:String=UserDefaults.standard.value(forKey: "ThID") as! String
+   
+    let param:Parameters=["threadId":thid,"memberId":id]
+    
+    var base_url:URL? = nil
+    base_url = URL(string: m )
+    
+    
+    Alamofire.request(base_url!,method:.put,parameters:param,encoding: JSONEncoding.default).responseJSON{ response in
+                            let result = response.result
+        
+        
+                            if(response.response?.statusCode==200)
+                            {
+                                print(response)
+        
+                         
+        
+                            }
+                            
+                        }
+
+
+    }
     
     func downloadInitialThread(completed: DownloadComplete){
         dismissKeyboard()
@@ -334,7 +551,32 @@ class MessageCenterVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSo
         let m0 :Dictionary<String,String> = ["userId":userid]
         //print(userid)
         
+       // let id:[String]=[userid]
+        var id:[String]=[]
+        
+        if( userid.contains(",")==true)
+        {
+            var t1=userid.components(separatedBy: ",").count
+            
+            
+            
+            for id1 in 0...t1-1{
+                id.append(userid.components(separatedBy: ",")[id1])
+                            }
+            
+            
+        }
+        else
+        {
+            id.append(userid)
+        }
+        
+        
+        
+        
         a.append(m0)
+        print(id)
+        
         let date = Date()
         let dateformatter = DateFormatter()
         
@@ -345,15 +587,16 @@ class MessageCenterVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSo
         let msgsenderid:String = UserDefaults.standard.value(forKey: "UserID") as! String
         
         
-        
-        let param:Parameters=["timeStamp":d,"lastSenderById":msgsenderid,"lastMessageText":msg,"participantList":a]
+       //
+        let param:Parameters=["timeStamp":d,"lastSenderById":msgsenderid,"lastMessageText":msg,"participantList":id]
         
         var base_url:URL? = nil
         base_url = URL(string: m )
         
         Alamofire.request(base_url!,method: .post ,parameters:param,encoding:JSONEncoding.default).responseJSON{ response in
             
-            print(response)
+        print(response)
+            id.removeAll()
             self.hideActivityIndicator()
             
             
@@ -368,46 +611,58 @@ class MessageCenterVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSo
         
     }
     
-    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+         return contacts.count
+    }
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return contacts.count
+    }
+
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return UITableViewCellEditingStyle(rawValue: 3)!
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "friendtablecell",for:indexPath) as? friendtablecell
+        {
+           let Friend=clist[indexPath.row]
+            cell.updatecell(Image: Friend.thumbnailurl, Name: Friend.username,ID:Friend.frienduserId)
+//            cell.accessoryType = cell.isSelected ? .checkmark : .none
+     //  cell.selectionStyle = .none
+        return cell
+        }
+        return UITableViewCell()
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("select")
+       userid=clist[indexPath.row].frienduserId
+        uid1.append(indexPath.row)
+        print(uid1)
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return contacts[row]
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        selectfriend.setTitle(contacts[row], for: UIControlState())
-        let UId = UserDefaults.standard.value(forKey: "UserID") as! String
-        print(UId)
         
-//        if(UId==clist[row].userId)
-//        {
-//            userid=clist[row].FriendId
-//        }
-//        else{
-//            userid=clist[row].userId
-//        }
-        
-        userid=clist[row].frienduserId
-        
-        
-        
-        
-//        if(clist[row].frienduserId != "")
-//        {
-//        userid=clist[row].frienduserId
-//        }
-//        else{
-//            userid=clist[row].frienduserId
-//        }
-        print(row)
-        print(userid)
-        print(self.clist[row].FriendId)
+       
+ 
+        var name=contacts[row]
+        //selectfriend.setTitle(contacts[row], for: UIControlState())
+       
+   
+            userid=clist[row].frienduserId
         
         selectfriendpicker.isHidden=true
+       
+        
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
@@ -524,6 +779,28 @@ class MessageCenterVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSo
     }
     
     override func viewDidAppear(_ animated: Bool) {
+    
+               //tablefrd.tintColor=UIColor.blue
+        
+        if(clist.count>0)
+        {
+            
+            tablefrd.dataSource=self
+            tablefrd.delegate=self
+            hidelabel.isHidden=true
+        }
+        else{
+            hidelabel.isHidden=false
+            tablefrd.isHidden=true
+
+        }
+        
+        
+        tablefrd.allowsMultipleSelectionDuringEditing = true
+        tablefrd.setEditing(true, animated: true)
+
+        
+        
         navigationController?.hidesBarsWhenKeyboardAppears = false
         if Reachability.isConnectedToNetwork() == true{
             

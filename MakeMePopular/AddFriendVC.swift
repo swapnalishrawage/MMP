@@ -74,18 +74,22 @@ class AddFriendVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         
         legendview.layer.cornerRadius = 4
         legendview.clipsToBounds = true
-        legendview.layer.borderColor = utils.hexStringToUIColor(hex: "ffffff").cgColor
+        legendview.layer.borderColor = utils.hexStringToUIColor(hex: "077DB4").cgColor
         legendview.layer.borderWidth = 2
         
         
-            legendPending.image = UIImage.fontAwesomeIcon(name: .hourglass1, textColor: utils.hexStringToUIColor(hex: "7D898B"), size: CGSize(width: 35, height: 35))
+            legendPending.image = UIImage.fontAwesomeIcon(name: .hourglass1, textColor: utils.hexStringToUIColor(hex: "077DB4"), size: CGSize(width: 35, height: 35))
         
        
-            legendAccepted.image = UIImage.fontAwesomeIcon(name: .checkSquareO, textColor: utils.hexStringToUIColor(hex: "5CDD67"), size: CGSize(width: 35, height: 35))
+            legendAccepted.image = UIImage.fontAwesomeIcon(name: .checkSquareO, textColor: utils.hexStringToUIColor(hex: "077DB4"), size: CGSize(width: 35, height: 35))
         
        
-            legendAdd.image = UIImage.fontAwesomeIcon(name: .userPlus, textColor: utils.hexStringToUIColor(hex: "ffffff"), size: CGSize(width: 35, height: 35))
+            legendAdd.image = UIImage.fontAwesomeIcon(name: .userPlus, textColor: utils.hexStringToUIColor(hex: "077DB4"), size: CGSize(width: 35, height: 35))
         
+        nameField.layer.borderWidth=1
+        nameField.layer.borderColor=UIColor(red: 7/255, green: 125/255, blue: 180/255, alpha: 1.0).cgColor
+        addressField.layer.borderWidth=1
+        addressField.layer.borderColor=UIColor(red: 7/255, green: 125/255, blue: 180/255, alpha: 1.0).cgColor
         
     }
     
@@ -117,6 +121,13 @@ class AddFriendVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         
         
         search.image = UIImage.fontAwesomeIcon(name: .search, textColor: utils.hexStringToUIColor(hex: "ffffff"), size: CGSize(width: 35, height: 35))
+        
+        search.layer.cornerRadius=17.5
+        search.layer.masksToBounds=true
+        
+        self.search.backgroundColor = utils.hexStringToUIColor(hex: "D67D2B")
+        
+        
         let singleTap3 = UITapGestureRecognizer(target: self, action: #selector(AddFriendVC.didSearchTapped))
         singleTap3.numberOfTapsRequired = 1 // you can change this value
         search.isUserInteractionEnabled = true
@@ -125,12 +136,12 @@ class AddFriendVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         favPickerView.layer.cornerRadius = 7
         favPickerView.clipsToBounds = true
         favPickerView.layer.borderWidth = 2
-        favPickerView.layer.borderColor = utils.hexStringToUIColor(hex: "ffffff").cgColor
+        favPickerView.layer.borderColor = utils.hexStringToUIColor(hex: "077DB4").cgColor
         
         nameadrsMainView.layer.cornerRadius = 7
         nameadrsMainView.clipsToBounds = true
         nameadrsMainView.layer.borderWidth = 2
-        nameadrsMainView.layer.borderColor = utils.hexStringToUIColor(hex: "ffffff").cgColor
+        nameadrsMainView.layer.borderColor = utils.hexStringToUIColor(hex: "077DB4").cgColor
         
         
         
@@ -205,6 +216,14 @@ class AddFriendVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
                     self.addFriendTable.reloadData()
                     self.addFriendTable.isHidden = false
 
+                }
+                else{
+                    let credentialerror = UIAlertController(title: "Add Friend", message: "No People Found Matching Your Specified Search Criteria.", preferredStyle: .alert)
+                    
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler:nil)
+                    
+                    credentialerror.addAction(cancelAction)
+                    self.present(credentialerror, animated: true, completion: {  })
                 }
                 self.view.isUserInteractionEnabled = true
                 self.hideActivityIndicator()
@@ -284,12 +303,12 @@ class AddFriendVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         let utils = Utils()
         
         if(isr1Check == true){
-        radio1.image = UIImage.fontAwesomeIcon(name: .checkCircleO, textColor: utils.hexStringToUIColor(hex: "ffffff"), size: CGSize(width: 30, height: 30))
-        radio2.image = UIImage.fontAwesomeIcon(name: .circleO, textColor: utils.hexStringToUIColor(hex: "ffffff"), size: CGSize(width: 30, height: 30))
+        radio1.image = UIImage.fontAwesomeIcon(name: .checkCircleO, textColor: utils.hexStringToUIColor(hex: "D67D2B"), size: CGSize(width: 30, height: 30))
+        radio2.image = UIImage.fontAwesomeIcon(name: .circleO, textColor: utils.hexStringToUIColor(hex: "D67D2B"), size: CGSize(width: 30, height: 30))
         
         }else{
-            radio2.image = UIImage.fontAwesomeIcon(name: .checkCircleO, textColor: utils.hexStringToUIColor(hex: "ffffff"), size: CGSize(width: 30, height: 30))
-            radio1.image = UIImage.fontAwesomeIcon(name: .circleO, textColor: utils.hexStringToUIColor(hex: "ffffff"), size: CGSize(width: 30, height: 30))
+            radio2.image = UIImage.fontAwesomeIcon(name: .checkCircleO, textColor: utils.hexStringToUIColor(hex: "D67D2B"), size: CGSize(width: 30, height: 30))
+            radio1.image = UIImage.fontAwesomeIcon(name: .circleO, textColor: utils.hexStringToUIColor(hex: "D67D2B"), size: CGSize(width: 30, height: 30))
             
             nameField.text = ""
             addressField.text = ""
@@ -372,7 +391,7 @@ class AddFriendVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
             
             pickerLabel?.font = UIFont(name: "Avenir", size: 16)
             pickerLabel?.textAlignment = NSTextAlignment.center
-            pickerLabel?.textColor = utils.hexStringToUIColor(hex: "ffffff")
+            pickerLabel?.textColor = utils.hexStringToUIColor(hex: "077DB4")
             
             
                 pickerLabel?.text = favOption[row].interestName
@@ -450,7 +469,7 @@ class AddFriendVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         //cell.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "shadow"))
             cell.backgroundColor = UIColor.clear
             cell.layer.borderWidth = 1
-            cell.layer.borderColor = utils.hexStringToUIColor(hex: "ffffff").cgColor
+            cell.layer.borderColor = utils.hexStringToUIColor(hex: "077DB4").cgColor
             cell.layer.cornerRadius = 5
             cell.layer.shadowOpacity = 0.5
             cell.layer.shadowOffset = CGSize(width: 8.0, height: 7.0)

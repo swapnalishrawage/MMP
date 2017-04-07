@@ -17,6 +17,5 @@ target 'MakeMePopular' do
     pod 'GoogleMaps'
     pod 'Charts/Realm'
     pod 'mailcore2-ios'
-      pod 'IQKeyboardManagerSwift'
-
+   pod 'FileBrowser', '~> 0.2'
 end

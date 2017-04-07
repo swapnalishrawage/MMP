@@ -17,10 +17,13 @@ import Firebase
 import GoogleMaps
 
 class RegistrationVC: UIViewController , UIPickerViewDelegate,UIPickerViewDataSource,UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate, GMSMapViewDelegate{
-    
+    var dbmsg=DBMessageList()
+    var dbth=DBThreadList()
+ var friend1=FriendListDetail()
     @IBOutlet weak var register: UIButton!
     @IBOutlet weak var profileImage: UIImageView!
     
+    @IBOutlet weak var imgback: UIImageView!
     @IBOutlet weak var fname: AkiraTextField!
     @IBOutlet weak var purpose: AkiraTextField!
     
@@ -67,9 +70,20 @@ class RegistrationVC: UIViewController , UIPickerViewDelegate,UIPickerViewDataSo
         
         datePickerView.addTarget(self, action: #selector(RegistrationVC.datePickerValueChanged(sender:)), for: UIControlEvents.valueChanged)
         dob.inputView = datePickerView
-        
+        datePickerView.maximumDate=NSDate() as Date
         imagePicker.delegate = self
 
+        
+        
+        let singleTap1 = UITapGestureRecognizer(target: self, action: #selector(RegistrationVC.didBackTapDetected1))
+        singleTap1.numberOfTapsRequired = 1 // you can change this value
+        imgback.isUserInteractionEnabled = true
+        imgback.addGestureRecognizer(singleTap1)
+        
+     imgback.image = UIImage.fontAwesomeIcon(name: .chevronLeft, textColor: UIColor.white, size: CGSize(width: 40, height: 45))
+        
+        
+        
         
         let tapRecognizer = UITapGestureRecognizer()
         tapRecognizer.addTarget(self, action: #selector(RegistrationVC.didTapView))
@@ -89,9 +103,12 @@ class RegistrationVC: UIViewController , UIPickerViewDelegate,UIPickerViewDataSo
 
         //let utils = Utils()
         //utils.createGradientLayer(view: self.view)
-        self.view.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "gradient_bg"))
+       // self.view.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "gradient_bg"))
     }
     
+    func didBackTapDetected1(){
+        self.dismiss(animated: true, completion: nil)
+    }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
         print("locations = \(locValue.latitude) \(locValue.longitude)")
@@ -239,9 +256,7 @@ class RegistrationVC: UIViewController , UIPickerViewDelegate,UIPickerViewDataSo
     
     
     @IBAction func registerClick(_ sender: Any) {
-        
-        
-        
+    
         var refreshedToken = ""
         if(FIRInstanceID.instanceID().token() != nil){
             refreshedToken = FIRInstanceID.instanceID().token()!
@@ -343,6 +358,9 @@ class RegistrationVC: UIViewController , UIPickerViewDelegate,UIPickerViewDataSo
             
             if(Reachability.isConnectedToNetwork()){
                 self.showActivityIndicator()
+                dbth.deleteallvalues()
+                friend1.deleteallvalues()
+                dbmsg.deleteallvalues()
             registerUser(completed: {}, userdetail: userdetail)
             }
             else {

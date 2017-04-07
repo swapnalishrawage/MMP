@@ -86,7 +86,7 @@ class FreindRequestNotificationVC: UIViewController {
         mainview.layer.cornerRadius = 7
         mainview.clipsToBounds = true
         mainview.layer.borderWidth = 3
-        mainview.layer.borderColor = utils.hexStringToUIColor(hex: "32A7B6").cgColor
+        mainview.layer.borderColor = utils.hexStringToUIColor(hex: "077DB4").cgColor
         
         close.image = UIImage.fontAwesomeIcon(name: .close, textColor: utils.hexStringToUIColor(hex: "ffffff"), size: CGSize(width: 35, height: 35))
         let singleTap2 = UITapGestureRecognizer(target: self, action: #selector(NotificationVC.didCloseTap))
@@ -240,7 +240,7 @@ class FreindRequestNotificationVC: UIViewController {
             
             
             let actInd = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
-            actInd.color = utils.hexStringToUIColor(hex: "32A7B6")
+            actInd.color = utils.hexStringToUIColor(hex: "077DB4")
             self.spinner = actInd
             self.spinner.frame = CGRect(x: 0.0, y: 0.0, width: 80.0, height: 80.0)
             self.spinner.center = CGPoint(x:self.loadingView.bounds.size.width / 2, y:self.loadingView.bounds.size.height / 2)

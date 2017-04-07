@@ -23,7 +23,9 @@ class EmergencyVC: UIViewController, UICollectionViewDelegate,UICollectionViewDa
     @IBOutlet weak var emergencyContactTable: UITableView!
     @IBOutlet weak var back: UIImageView!
     var msg:String = ""
-    
+    let fnm:String=UserDefaults.standard.value(forKey: "UserFName") as! String
+    let Lnm:String=UserDefaults.standard.value(forKey: "UserLName") as! String
+
     var spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
     var loadingView: UIView = UIView()
     
@@ -38,6 +40,10 @@ class EmergencyVC: UIViewController, UICollectionViewDelegate,UICollectionViewDa
         
         emergencyCV.delegate = self
         emergencyCV.dataSource = self
+        emergencyContactTable.layer.borderWidth=2.0
+        emergencyContactTable.layer.borderColor=UIColor(red: 7/255, green: 125/255, blue: 180/255, alpha: 1.0).cgColor
+        
+        emergencyContactTable.layer.cornerRadius=5.0
         
         self.noData.isHidden = true
         self.emergencyContactTable.isHidden = false
@@ -75,13 +81,14 @@ class EmergencyVC: UIViewController, UICollectionViewDelegate,UICollectionViewDa
     }
     
     func setMessage(){
-        if(UserDefaults.standard.value(forKey: "UserAdrs") != nil && UserDefaults.standard.value(forKey: "UserCity") != nil){
+        
+               if(UserDefaults.standard.value(forKey: "UserAdrs") != nil && UserDefaults.standard.value(forKey: "UserCity") != nil){
         let adrs = UserDefaults.standard.value(forKey: "UserAdrs") as! String
         let city = UserDefaults.standard.value(forKey: "UserCity") as! String
-            msg = "Medical Emergency, I need help at: "+adrs+" , "+city
+            msg = "Medical Emergency,\(fnm) \(Lnm) need help at: "+adrs+" , "+city
         }
         else{
-            msg = "Medical Emergency, I need help"
+            msg = "Medical Emergency, \(fnm) \(Lnm) need help"
         }
         
       
@@ -295,7 +302,7 @@ class EmergencyVC: UIViewController, UICollectionViewDelegate,UICollectionViewDa
         
         var bgcolor = "FF6347"
         if(!emergency[indexPath.row].isSelected){
-            bgcolor = "ffffff"
+            bgcolor = "CCCCCC"
         }
         
         if let cell=collectionView.dequeueReusableCell(withReuseIdentifier: "EmergencyCell", for: indexPath as IndexPath) as? EmergencyCell {
@@ -331,7 +338,7 @@ class EmergencyVC: UIViewController, UICollectionViewDelegate,UICollectionViewDa
         
         let isselected = emergency[indexPath.row].isSelected
         var selected = false
-        var bgcolor = "ffffff"
+        var bgcolor = "CCCCCC"
         
         if(isselected){
             selected = false
@@ -349,13 +356,13 @@ class EmergencyVC: UIViewController, UICollectionViewDelegate,UICollectionViewDa
             
             selected = true
             if(emergency[indexPath.row]._interestName == "Medical"){
-              msg = "Medical Emergency, I need help at: " + adrs + ", " + city
+              msg = "Medical Emergency, \(fnm) \(Lnm) need help at: " + adrs + ", " + city
             }
             else if(emergency[indexPath.row]._interestName == "Trouble"){
-                msg = "I am in Trouble, need help at " + adrs + ", " + city
+                msg = "\(fnm) \(Lnm)  in Trouble, need help at " + adrs + ", " + city
             }
             else if(emergency[indexPath.row]._interestName == "Accident"){
-                msg = "I have met an accident at " + adrs + ", " + city
+                msg = "\(fnm) \(Lnm) have met an accident at " + adrs + ", " + city
             }
             
            
@@ -442,7 +449,7 @@ class EmergencyVC: UIViewController, UICollectionViewDelegate,UICollectionViewDa
             
             
             let actInd = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
-            actInd.color = utils.hexStringToUIColor(hex: "32A7B6")
+            actInd.color = utils.hexStringToUIColor(hex: "ffffff")
             self.spinner = actInd
             self.spinner.frame = CGRect(x: 0.0, y: 0.0, width: 80.0, height: 80.0)
             self.spinner.center = CGPoint(x:self.loadingView.bounds.size.width / 2, y:self.loadingView.bounds.size.height / 2)

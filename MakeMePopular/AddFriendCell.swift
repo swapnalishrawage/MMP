@@ -32,7 +32,7 @@ class AddFriendCell: UITableViewCell {
             addfriend.image = UIImage.fontAwesomeIcon(name: .checkSquareO, textColor: utils.hexStringToUIColor(hex: "5CDD67"), size: CGSize(width: 35, height: 35))
         }
         else{
-            addfriend.image = UIImage.fontAwesomeIcon(name: .userPlus, textColor: utils.hexStringToUIColor(hex: "ffffff"), size: CGSize(width: 35, height: 35))
+            addfriend.image = UIImage.fontAwesomeIcon(name: .userPlus, textColor: utils.hexStringToUIColor(hex: "D67D2B"), size: CGSize(width: 35, height: 35))
         }
         profilePic.layer.cornerRadius = 22
         profilePic.clipsToBounds = true

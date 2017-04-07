@@ -15,14 +15,20 @@ import ObjectMapper
 //
 
 
-class FriendListVC: UIViewController , UITableViewDataSource, UITableViewDelegate
+class FriendListVC: UIViewController , UITableViewDataSource, UITableViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource
 {
 
+    @IBOutlet weak var switchemer: UISwitch!
+    @IBOutlet weak var imgtrack: UIImageView!
+    @IBOutlet weak var imgblock: UIImageView!
+    @IBOutlet weak var imgunfrd: UIImageView!
+    @IBOutlet weak var controlview: UIView!
     var sections = [FriendListModel]()
     var sentList = [FriendListModel]()
     var recievedList = [FriendListModel]()
     
     
+    @IBOutlet weak var frdcollection: UICollectionView!
     @IBOutlet weak var blocked: UIImageView!
     @IBOutlet weak var rejected: UIImageView!
     @IBOutlet weak var infoView: UIView!
@@ -54,7 +60,9 @@ class FriendListVC: UIViewController , UITableViewDataSource, UITableViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        controlview.isHidden=true
         
+        frdcollection.isHidden=true
         friendListTable.register(UINib(nibName: "HeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: "CollapsibleTableViewHeader")
         
         filetrrequest.setTitleTextAttributes((segAttributes1 as! [AnyHashable : Any]), for: .selected)
@@ -64,13 +72,15 @@ class FriendListVC: UIViewController , UITableViewDataSource, UITableViewDelegat
         
         friendListTable.delegate = self
         friendListTable.dataSource = self
-        
+//        frdcollection.dataSource=self
+//        frdcollection.delegate=self
+//        frdcollection.reloadData()
         filetrrequest.isHidden = true
         filterSegmentHeight.constant = 0
         
         setUpView()
-        
-       
+    
+      
         
         let singleTap = UITapGestureRecognizer(target: self, action: #selector(FriendListVC.didBackTapDetected))
         singleTap.numberOfTapsRequired = 1 // you can change this value
@@ -110,6 +120,8 @@ class FriendListVC: UIViewController , UITableViewDataSource, UITableViewDelegat
         blocked.image = UIImage.fontAwesomeIcon(name: .timesCircle, textColor: utils.hexStringToUIColor(hex: "DD2518"), size: CGSize(width: 35, height: 35))
         
 
+        
+        
 
         
     }
@@ -258,6 +270,40 @@ class FriendListVC: UIViewController , UITableViewDataSource, UITableViewDelegat
        
     }
     
+    //collection view delegates methods
+    
+    
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return sections.count
+    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+            let utils = Utils()
+        if let cell=collectionView.dequeueReusableCell(withReuseIdentifier: "friendlistcellcoll", for: indexPath as IndexPath) as? friendlistcellcoll {
+           // cell.backgroundColor=UIColor.black
+            //sections[section].friendName
+        let m=sections[indexPath.row]
+        cell.updatecell(Image: m.friendThumbnailUrl!, Name: m.friendName!, ID: m.createTS!)
+            cell.layer.borderColor=utils.hexStringToUIColor(hex: "077DB4").cgColor
+            cell.layer.borderWidth=1
+            
+            cell.image.layer.cornerRadius=40.7
+        return cell
+        }
+         
+        return UICollectionViewCell()
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("collection view select")
+    }
+    
+    
+    
+    
     //Table Delegate Methods
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -270,7 +316,51 @@ class FriendListVC: UIViewController , UITableViewDataSource, UITableViewDelegat
         //return sections[section].items.count
     }
     
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//       
+//        
+//        print("click")
     
+//        let user:FriendListModel!
+//        controlview.isHidden=false
+//        
+//        let utils = Utils()
+//    var trackcolor = utils.hexStringToUIColor(hex: "7D898B")
+//         var msgcolor = utils.hexStringToUIColor(hex: "7D898B")
+//        
+//        if(user.isTrackingAllowed == true){
+//            trackcolor = utils.hexStringToUIColor(hex: "5CDD67")
+//        }
+//        
+//        imgtrack.image = UIImage.fontAwesomeIcon(name: .mapMarker, textColor: trackcolor, size: CGSize(width: 50, height: 50))
+//        
+//        
+//        if(user.status == "Blocked")
+//        {
+//            imgunfrd.image = UIImage.fontAwesomeIcon(name: .userTimes, textColor: utils.hexStringToUIColor(hex: "7D898B"), size: CGSize(width: 45, height: 45))
+//            
+//           imgblock.image = UIImage.fontAwesomeIcon(name: .timesCircle, textColor: utils.hexStringToUIColor(hex: "7D898B"), size: CGSize(width: 45, height: 45))
+//        }
+//                    else{
+//            imgunfrd.image = UIImage.fontAwesomeIcon(name: .userTimes, textColor: utils.hexStringToUIColor(hex: "FF6347"), size: CGSize(width: 45, height: 45))
+//            
+//           imgblock.image = UIImage.fontAwesomeIcon(name: .timesCircle, textColor: utils.hexStringToUIColor(hex: "DD2518"), size: CGSize(width: 45, height: 45))
+//        }
+//        
+//        
+//        if(user.isEmergencyAlert == true){
+//           switchemer.isOn = true
+//        }
+//        else{
+//            switchemer.isOn = false
+//        }
+        
+        
+        
+        
+        
+   // }
+        
     //CELL
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -279,6 +369,8 @@ class FriendListVC: UIViewController , UITableViewDataSource, UITableViewDelegat
         {
             let utils = Utils()
             let friend:FriendListModel = sections[indexPath.section]
+            cell.layer.borderWidth=1
+            cell.layer.borderColor=utils.hexStringToUIColor(hex: "077DB4").cgColor
             cell.updateCell(user: friend)
             
             cell.selectionStyle = .none
@@ -338,7 +430,7 @@ class FriendListVC: UIViewController , UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
+         let utils = Utils()
         var header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "CollapsibleTableViewHeader") as? CollapsibleTableViewHeader
         
         header?.accept.tag = section
@@ -364,6 +456,10 @@ class FriendListVC: UIViewController , UITableViewDataSource, UITableViewDelegat
         
         
         let imgText = ImageToText()
+//        header?.layer.borderColor = utils.hexStringToUIColor(hex: "077DB4").cgColor
+//        header?.layer.borderWidth=1
+        
+
         header?.friendImg.image = imgText.textToImage(drawText: st as NSString, inImage: #imageLiteral(resourceName: "greybg"), atPoint: CGPoint(x: 20.0, y: 20.0))
         
         if(sections[section].friendThumbnailUrl != nil){
@@ -382,6 +478,7 @@ func setHeaderFRRecieved(header:CollapsibleTableViewHeader,section:Int) -> Colla
         let utils = Utils()
     header.friendImg.layer.cornerRadius = 25
     header.friendImg.clipsToBounds = true
+    header.titleLabel.textColor=UIColor.black
     header.titleLabel.text = sections[section].friendName
     header.accept.isHidden = true
     
@@ -545,6 +642,12 @@ func setHeaderFRSent(header:CollapsibleTableViewHeader,section:Int) -> Collapsib
                     self.friendListTable.reloadData()
                     self.friendListTable.isHidden = false
                     
+                    
+                    
+//                    self.frdcollection.delegate=self
+//                    self.frdcollection.dataSource=self
+//                    self.friendListTable.reloadData()
+                    
                 }
                 self.view.isUserInteractionEnabled = true
                 self.hideActivityIndicator()
@@ -605,6 +708,12 @@ func setHeaderFRSent(header:CollapsibleTableViewHeader,section:Int) -> Collapsib
                 self.friendListTable.delegate = self
                 self.friendListTable.dataSource = self
                 self.friendListTable.reloadData()
+                
+//                
+//                self.frdcollection.delegate=self
+//                self.frdcollection.dataSource=self
+//                self.friendListTable.reloadData()
+
                 
                 self.view.isUserInteractionEnabled = true
                 self.hideActivityIndicator()
@@ -725,6 +834,11 @@ func setHeaderFRSent(header:CollapsibleTableViewHeader,section:Int) -> Collapsib
                 self.friendListTable.dataSource = self
                 self.friendListTable.reloadData()
                 
+                
+//                self.frdcollection.delegate=self
+//                self.frdcollection.dataSource=self
+                self.friendListTable.reloadData()
+
                 self.view.isUserInteractionEnabled = true
                 self.hideActivityIndicator()
                 
@@ -797,6 +911,12 @@ func setHeaderFRSent(header:CollapsibleTableViewHeader,section:Int) -> Collapsib
                 self.friendListTable.dataSource = self
                 self.friendListTable.reloadData()
                 
+                
+//                self.frdcollection.delegate=self
+//                self.frdcollection.dataSource=self
+                self.friendListTable.reloadData()
+
+                
                 self.view.isUserInteractionEnabled = true
                 self.hideActivityIndicator()
                 
@@ -829,6 +949,12 @@ func setHeaderFRSent(header:CollapsibleTableViewHeader,section:Int) -> Collapsib
             self.sections = recievedList
             self.friendListTable.delegate = self
             self.friendListTable.dataSource = self
+            
+            
+//            self.frdcollection.delegate=self
+//            self.frdcollection.dataSource=self
+            self.friendListTable.reloadData()
+
             self.friendListTable.reloadData()
             
               }

@@ -20,7 +20,7 @@ class Utils{
         gradientLayer = CAGradientLayer()
         
         gradientLayer.frame = view.bounds
-        gradientLayer.colors = [hexStringToUIColor(hex: "00838F").cgColor, hexStringToUIColor(hex: "#4DD0E1").cgColor,hexStringToUIColor(hex: "00838F").cgColor]
+        gradientLayer.colors = [hexStringToUIColor(hex: "ffffff").cgColor, hexStringToUIColor(hex: "ffffff").cgColor,hexStringToUIColor(hex: "ffffff").cgColor]
         
         
         

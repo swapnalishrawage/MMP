@@ -21,7 +21,7 @@ class EmergencyCell: UICollectionViewCell {
     func updateCell(interest:String, isSelected:Bool)
     {
         
-        var textColor = "00BCD4"
+        var textColor = "077DB4"
         if(isSelected){
             textColor = "ffffff"
         }

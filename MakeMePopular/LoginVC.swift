@@ -36,7 +36,8 @@ class LoginVC: UIViewController, UINavigationControllerDelegate, CLLocationManag
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
+        mobileno.layer.borderColor=UIColor.blue.cgColor
+       //mobileno.borderColor=UIColor(red: 7/255, green: 125/255, blue:180/255, alpha: 1.0 )
         
         setView()
         
@@ -73,9 +74,9 @@ class LoginVC: UIViewController, UINavigationControllerDelegate, CLLocationManag
         
         let utils = Utils()
         
-        headerImage.image = UIImage.fontAwesomeIcon(name: .phone, textColor: utils.hexStringToUIColor(hex: "ffffff"), size: CGSize(width: 40, height: 40))
+        headerImage.image = UIImage.fontAwesomeIcon(name: .phone, textColor: utils.hexStringToUIColor(hex: "077DB4"), size: CGSize(width: 40, height: 40))
         
-        let singleTap = UITapGestureRecognizer(target: self, action: #selector(LoginVC.didTapDetected))
+        let singleTap = UITapGestureRecognizer(target: self, action: #selector(LoginVC.didTapDetected1))
         singleTap.numberOfTapsRequired = 1 // you can change this value
         signup.isUserInteractionEnabled = true
         signup.addGestureRecognizer(singleTap)
@@ -83,9 +84,11 @@ class LoginVC: UIViewController, UINavigationControllerDelegate, CLLocationManag
         
     }
     
-    
-    func didTapDetected() {
+    func didTapDetected1() {
         performSegue(withIdentifier: "register", sender: self)
+    }
+    func didTapDetected() {
+        performSegue(withIdentifier: "Login", sender: self)
     }
     
     
@@ -97,7 +100,7 @@ class LoginVC: UIViewController, UINavigationControllerDelegate, CLLocationManag
         //let utils = Utils()
        // utils.createGradientLayer(view: self.view)
         let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
-        backgroundImage.image = #imageLiteral(resourceName: "login_back")
+        backgroundImage.image = #imageLiteral(resourceName: "login_bg_img")//#imageLiteral(resourceName: "login_back")
         backgroundImage.contentMode = UIViewContentMode.scaleToFill
         self.view.insertSubview(backgroundImage, at: 0)
 
@@ -112,10 +115,12 @@ class LoginVC: UIViewController, UINavigationControllerDelegate, CLLocationManag
     
     @IBAction func submitClick(_ sender: Any) {
         
+       
         dbth.deleteallvalues()
         friend1.deleteallvalues()
         dbmsg.deleteallvalues()
-        
+//        getFriendList {
+//                }
         locationManager.stopUpdatingLocation()
         
         if(mobileno.text != nil){
@@ -194,6 +199,78 @@ class LoginVC: UIViewController, UINavigationControllerDelegate, CLLocationManag
         
     }
     
+    func getFriendList(completed: @escaping DownloadComplete)
+    {
+        let friend1=FriendListDetail()
+        
+    
+               let methodName = "getFriendList"
+        Current_Url = "\(BASE_URL)\(methodName)"
+        
+        
+        let current_url = URL(string: Current_Url)!
+        let time=friend1.getupdateddateoffriend()
+        
+        let userId = UserDefaults.standard.value(forKey: "UserID") as! String
+        
+        var parameters1 = ["userId":userId,"searchText":"","lastUpdatedDate":time] as [String : Any]
+        if(time=="")
+        {
+            parameters1=["userId":userId,"searchText":""] as [String : Any]
+            
+        }
+        
+        let headers1:HTTPHeaders = ["Content-Type": "application/json",
+                                    "Accept": "application/json"]
+        
+        print(current_url)
+        
+        Alamofire.request(current_url, method: .post, parameters: parameters1, encoding: JSONEncoding.default, headers: headers1).responseJSON{ response in
+            
+            
+            let result = response.result
+            
+            
+            if let dict = result.value  as?  [Dictionary<String,AnyObject>]
+                
+            {
+                let res = Mapper<FriendListModel>().mapArray(JSONObject: dict)
+                
+                
+                if((res?.count)! > 0)
+                {
+                    for i in 0...((res?.count)! - 1)
+                    {
+                        let msg = res?[i]
+                        let isfriend:Bool=friend1.getfriends(friendId: (msg?.friendsUserId)!)
+                        if(isfriend == true)
+                        {
+                            
+                            
+                            //update....
+                            
+                        }
+                            
+                        else{
+                            
+                            friend1.insertfriendlist(friendlist: msg!)
+                            
+                        }
+                    }
+                }
+                    
+                else { }
+                
+                
+                
+                
+            }
+            
+            completed()
+        }
+    }
+
+    
     func loginUser(completed: DownloadComplete, mobileno:String){
         
         self.view.isUserInteractionEnabled = false
@@ -234,7 +311,9 @@ class LoginVC: UIViewController, UINavigationControllerDelegate, CLLocationManag
                 
                 let pref = UserDefaults.standard
                 pref.set(res?.fName, forKey: "UserFName")
+                    
                 pref.set(res?.lName, forKey: "UserLName")
+                 
                 pref.set(res?.thumbnailUrl, forKey: "ProfilePic")
                 pref.set(res?.gender, forKey: "Gender")
                 pref.set(res?.userId, forKey: "UserID")
@@ -242,6 +321,8 @@ class LoginVC: UIViewController, UINavigationControllerDelegate, CLLocationManag
                 pref.set(res?.dob, forKey: "BirthDate")
                 pref.set(res?.emailId, forKey: "EmailID")
                 pref.set(res?.contactNo, forKey: "MobNo")
+               pref.set(res?.ChatBadgeCount, forKey: "ChatCount")
+             pref.set(res?.FriendBadgeCount, forKey: "FriendCount")
                 if(res?.todayTrackedCount != nil){
                    pref.setValue(res?.todayTrackedCount, forKey: "TodayTrack")
                 }
@@ -270,6 +351,9 @@ class LoginVC: UIViewController, UINavigationControllerDelegate, CLLocationManag
                 self.view.isUserInteractionEnabled = true
                 
                 self.hideActivityIndicator()
+                    self.getFriendList {
+                     
+                    }
                 self.performSegue(withIdentifier: "logintodashboard", sender: self)
                 }
             }
@@ -277,7 +361,7 @@ class LoginVC: UIViewController, UINavigationControllerDelegate, CLLocationManag
       else{
         self.view.isUserInteractionEnabled = true
               self.hideActivityIndicator()
-        let credentialerror = UIAlertController(title: "Login", message: "Login Failed, please check mobile number.", preferredStyle: .alert)
+        let credentialerror = UIAlertController(title: "Login", message: "Login Failed, please try after some time.", preferredStyle: .alert)
         
         let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler:nil)
         

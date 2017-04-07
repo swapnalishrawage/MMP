@@ -115,7 +115,7 @@ class NotifiationListVC: UIViewController, UITableViewDelegate, UITableViewDataS
         
         filterView.layer.cornerRadius = 3
         filterView.layer.borderWidth = 4
-        filterView.layer.borderColor = utils.hexStringToUIColor(hex: "32A7B6").cgColor
+        filterView.layer.borderColor = utils.hexStringToUIColor(hex: "077DB4").cgColor
         
         btnDone.layer.cornerRadius = 4
         btnDone.layer.shadowOpacity = 0.5
@@ -184,13 +184,13 @@ class NotifiationListVC: UIViewController, UITableViewDelegate, UITableViewDataS
     func ChangeCheck(imgV:UIImageView){
         
         let utils = Utils()
-        imgF.image = UIImage.fontAwesomeIcon(name: .circleO, textColor: utils.hexStringToUIColor(hex: "32A7B6"), size: CGSize(width: 25, height: 25))
-        imgE.image = UIImage.fontAwesomeIcon(name: .circleO, textColor: utils.hexStringToUIColor(hex: "32A7B6"), size: CGSize(width: 25, height: 25))
-        imgFRA.image = UIImage.fontAwesomeIcon(name: .circleO, textColor: utils.hexStringToUIColor(hex: "32A7B6"), size: CGSize(width: 25, height: 25))
-        imgFRR.image = UIImage.fontAwesomeIcon(name: .circleO, textColor: utils.hexStringToUIColor(hex: "32A7B6"), size: CGSize(width: 25, height: 25))
-        imgER.image = UIImage.fontAwesomeIcon(name: .circleO, textColor: utils.hexStringToUIColor(hex: "32A7B6"), size: CGSize(width: 25, height: 25))
-        imgTS.image = UIImage.fontAwesomeIcon(name: .circleO, textColor: utils.hexStringToUIColor(hex: "32A7B6"), size: CGSize(width: 25, height: 25))
-        imgV.image = UIImage.fontAwesomeIcon(name: .checkCircleO, textColor: utils.hexStringToUIColor(hex: "32A7B6"), size: CGSize(width: 25, height: 25))
+        imgF.image = UIImage.fontAwesomeIcon(name: .circleO, textColor: utils.hexStringToUIColor(hex: "D67D2B"), size: CGSize(width: 25, height: 25))
+        imgE.image = UIImage.fontAwesomeIcon(name: .circleO, textColor: utils.hexStringToUIColor(hex: "D67D2B"), size: CGSize(width: 25, height: 25))
+        imgFRA.image = UIImage.fontAwesomeIcon(name: .circleO, textColor: utils.hexStringToUIColor(hex: "D67D2B"), size: CGSize(width: 25, height: 25))
+        imgFRR.image = UIImage.fontAwesomeIcon(name: .circleO, textColor: utils.hexStringToUIColor(hex: "D67D2B"), size: CGSize(width: 25, height: 25))
+        imgER.image = UIImage.fontAwesomeIcon(name: .circleO, textColor: utils.hexStringToUIColor(hex: "D67D2B"), size: CGSize(width: 25, height: 25))
+        imgTS.image = UIImage.fontAwesomeIcon(name: .circleO, textColor: utils.hexStringToUIColor(hex: "D67D2B"), size: CGSize(width: 25, height: 25))
+        imgV.image = UIImage.fontAwesomeIcon(name: .checkCircleO, textColor: utils.hexStringToUIColor(hex: "D67D2B"), size: CGSize(width: 25, height: 25))
 
     }
     
@@ -282,7 +282,7 @@ class NotifiationListVC: UIViewController, UITableViewDelegate, UITableViewDataS
             cell.backgroundColor = UIColor.clear
             
             cell.layer.borderWidth = 1
-            cell.layer.borderColor = utils.hexStringToUIColor(hex: "ffffff").cgColor
+            cell.layer.borderColor = utils.hexStringToUIColor(hex: "077DB4").cgColor
             cell.layer.cornerRadius = 5
             cell.layer.shadowOpacity = 0.5
             cell.layer.shadowOffset = CGSize(width: 8.0, height: 7.0)

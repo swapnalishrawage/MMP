@@ -72,13 +72,13 @@ class TrackDialogueVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
         let utils = Utils()
         pickerView.layer.borderWidth = 1
-        pickerView.layer.borderColor = utils.hexStringToUIColor(hex: "32A7B6").cgColor
+        pickerView.layer.borderColor = utils.hexStringToUIColor(hex: "077DB4").cgColor
         
-        optionFriend.layer.borderColor = utils.hexStringToUIColor(hex: "32A7B6").cgColor
+        optionFriend.layer.borderColor = utils.hexStringToUIColor(hex: "077DB4").cgColor
         optionFriend.layer.borderWidth = 2
         
         optionPossibilities.layer.borderWidth = 2
-        optionPossibilities.layer.borderColor = utils.hexStringToUIColor(hex: "32A7B6").cgColor
+        optionPossibilities.layer.borderColor = utils.hexStringToUIColor(hex: "077DB4").cgColor
         
         
         proceed.layer.cornerRadius = 5
@@ -90,7 +90,7 @@ class TrackDialogueVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         mainView.layer.cornerRadius = 5
         mainView.clipsToBounds = true
         mainView.layer.borderWidth = 3
-        mainView.layer.borderColor = utils.hexStringToUIColor(hex: "32A7B6").cgColor
+        mainView.layer.borderColor = utils.hexStringToUIColor(hex: "077DB4").cgColor
         
         close.image = UIImage.fontAwesomeIcon(name: .close, textColor: utils.hexStringToUIColor(hex: "ffffff"), size: CGSize(width: 35, height: 35))
         let singleTap2 = UITapGestureRecognizer(target: self, action: #selector(TrackDialogueVC.didCloseTap))
@@ -111,7 +111,7 @@ class TrackDialogueVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             let utils = Utils()
             distanceSlider.isHidden = true
             distanceSlider.label.isHidden = true
-            self.optionFriend.backgroundColor = utils.hexStringToUIColor(hex: "00BCD4")
+            self.optionFriend.backgroundColor = utils.hexStringToUIColor(hex: "077DB4")
             self.optionFriend.layer.cornerRadius = 10
             self.optionFriend.clipsToBounds = true
             self.optionFriend.image = UIImage.fontAwesomeIcon(name: .users, textColor: utils.hexStringToUIColor(hex: "ffffff"), size: CGSize(width: 60, height: 60))
@@ -119,7 +119,7 @@ class TrackDialogueVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             self.optionPossibilities.backgroundColor = utils.hexStringToUIColor(hex: "ffffff")
             self.optionPossibilities.layer.cornerRadius = 10
             self.optionPossibilities.clipsToBounds = true
-            self.optionPossibilities.image = UIImage.fontAwesomeIcon(name: .userPlus, textColor: utils.hexStringToUIColor(hex: "00BCD4"), size: CGSize(width: 60, height: 60))
+            self.optionPossibilities.image = UIImage.fontAwesomeIcon(name: .userPlus, textColor: utils.hexStringToUIColor(hex: "077DB4"), size: CGSize(width: 60, height: 60))
             
             
             
@@ -161,9 +161,9 @@ class TrackDialogueVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             self.optionFriend.backgroundColor = utils.hexStringToUIColor(hex: "ffffff")
             self.optionFriend.layer.cornerRadius = 10
             self.optionFriend.clipsToBounds = true
-            self.optionFriend.image = UIImage.fontAwesomeIcon(name: .users, textColor: utils.hexStringToUIColor(hex: "00BCD4"), size: CGSize(width: 60, height: 60))
+            self.optionFriend.image = UIImage.fontAwesomeIcon(name: .users, textColor: utils.hexStringToUIColor(hex: "077DB4"), size: CGSize(width: 60, height: 60))
             
-            self.optionPossibilities.backgroundColor = utils.hexStringToUIColor(hex: "00BCD4")
+            self.optionPossibilities.backgroundColor = utils.hexStringToUIColor(hex: "077DB4")
             self.optionPossibilities.layer.cornerRadius = 10
             self.optionPossibilities.clipsToBounds = true
             self.optionPossibilities.image = UIImage.fontAwesomeIcon(name: .userPlus, textColor: utils.hexStringToUIColor(hex: "ffffff"), size: CGSize(width: 60, height: 60))
